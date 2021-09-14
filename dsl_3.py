@@ -1,18 +1,26 @@
 class Matrix:
     
-    def __init__(self, array):
-        
+    def __init__(self, array:list):
+        """The Matrix class constructor 
+        Initializes and sets the following object parameters
+        1 ->.columns : Number of columns of the matrix
+        2 ->.rows : Number of rows of the matrix
+        3 ->.array :the values of the matrix in the form of a list
+        Prints "invalid matrix" if the given matrix is not dimensionally correct and 
+        the passed object is not given the object parameters. """
        
-        columns = list(set([len(array[i]) for i in range(len(array))]))
-        if len(columns)==1:
+        columns = list(set([Matrix.len(array[i]) for i in range(Matrix.len(array))]))
+        if Matrix.len(columns)==1:
             self.columns = columns[0]
             self.array = array
-            self.rows = len(array)
+            self.rows = Matrix.len(array)
 
         else:
             print("Invalid matrix")
 
     def add(self,array):
+        """Returns the Addition of 2 matrices
+           Returns error matrix if the dimensions are wrong or the matrix is invalid"""
         try:
             matrix = Matrix(array)
             if self.rows == matrix.rows and self.columns == matrix.columns:
@@ -29,7 +37,9 @@ class Matrix:
             print("Invalid Matrices used")
             return Matrix([["error"]])
 
-    def sub(self,array):
+    def sub(self,array:list):
+        """Returns the Subtraction of 2 matrices
+           Returns error matrix if the dimensions are wrong or the matrix is invalid"""
         try:
             matrix = Matrix(array)
             if self.rows == matrix.rows and self.columns == matrix.columns:
@@ -47,7 +57,7 @@ class Matrix:
             return Matrix([["error"]])
 
     def Transpose(self):
-        """Returns the transpose of a matrix"""
+        """Returns the transpose of the matrix"""
         try:
             res = [[0 for i in range(self.rows)] for i in range(self.columns)]
             for i in range(self.rows):
@@ -58,7 +68,11 @@ class Matrix:
         except:
             print("Invalid matrix given ")
             return Matrix([["error"]])
-    def mul(self,array):
+
+
+    def mul(self,array:list):
+        """Returns the Multiplication of 2 matrices
+           Returns error matrix if the dimensions are wrong or the matrix is invalid"""
         try:
             matrix = Matrix(array)
             if self.columns == matrix.rows:
@@ -76,7 +90,11 @@ class Matrix:
         except:
             print("Invalid matrix used")
             return Matrix([["error"]])
-    def display_matrix(self):
+
+
+    def display_matrix(self)->None:
+        """Function used to display the matrix using standard representation
+           Has no return value"""
         h = (self.columns*2-1)*" "
         
         print(f" _{h}_")
@@ -90,11 +108,20 @@ class Matrix:
                     print(self.array[i][j],end=" ")
 
         print(f" ¯{h}¯")
-   
+    @staticmethod
+    def len(list:list)->int:
+        """Returns the length of the list"""
+        i=0
+        while True:
+            try:
+                x = list[i]
+                i+=1
+            except:
+                break
+
+        return i
+
     
-
-
-
 
 
 if __name__ =="__main__":
@@ -145,10 +172,17 @@ if __name__ =="__main__":
         elif choice ==4:
          
             print(" ------The output matrix is -----")
-            m.Transpose.display_matrix()
+            m.Transpose().display_matrix()
         else:
             print("Thankyou")
             break
+
+        
+
+
+
+
+
 
         
 
