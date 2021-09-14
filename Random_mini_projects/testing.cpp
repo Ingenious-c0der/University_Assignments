@@ -6,8 +6,8 @@ class Test{
     static int z;
     int x,y;
     static void st_func(){
-       void xyz();
-       void cake();
+       xyz();
+       cake();
     }
     public:
     Test();//default
