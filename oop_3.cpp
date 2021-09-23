@@ -23,7 +23,7 @@ class Book:private Publication{
 
 };
 class Tape:private Publication{
-    int play_time;
+    float play_time;
     public:
     void set_details();
     void get_details();
@@ -31,10 +31,13 @@ class Tape:private Publication{
 
 };
 void Book::set_details(){
-    cout<<"Enter the Title : ";
+    
     try{
-        cin>>title;
+        cout<<"Enter the Title : ";
+        cin.ignore();
+        getline(cin,title);
         if (title.length()<3){
+            cout<<"Invalid title entered"<<endl;
                 throw title;
 
         }
@@ -44,6 +47,7 @@ void Book::set_details(){
          cout<<"Enter the price of the book : ";
          cin>>price;
           if (price<=0){
+              cout<<"Invalid price entered"<<endl;
             throw price;
         }
         else{
@@ -52,27 +56,28 @@ void Book::set_details(){
          cout<<"Enter the number of pages : ";
           cin>>page_count;
         if (page_count<=0){
+            cout<<"Invalid page count entered"<<endl;
             throw page_count;
         }
         else{
             cout<<"Valid page count given..you may continue"<<endl;
         }
-    }catch(int page_count){
-            this->title =" ";
-            this->price = 0;
-            this->page_count = 0;
+    }catch(int page){
+            title =" ";
+            price = 0;
+            page_count = 0;
 
 
         }
-    catch(float price){
-        this->title =" ";
-        this->price = 0;
-        this->page_count = 0;
+    catch(float p){
+        title =" ";
+        price = 0;
+        page_count = 0;
     }
-    catch(string title){
-            this->title =" ";
-            this->price = 0;
-            this->page_count = 0;
+    catch(string t){
+            title =" ";
+            price = 0;
+            page_count = 0;
     }
 }
 
@@ -82,54 +87,65 @@ void Book::get_details(){
     cout<<"The page count of the book is "<<page_count<<endl;
 }
 void Tape::set_details(){
-    cout<<"Enter the Title : ";
+    
     try{
-        cin>>title;
-        if (title.length()>3){
+        cout<<"Enter the Title : ";
+        cin.ignore();
+        getline(cin,title);
+        if (title.length()<3){
+            cout<<"Invalid title entered"<<endl;
                 throw title;
 
         }
         else{
             cout<<"Title valid,you may continue.."<<endl;
         }
-         cout<<"Enter the price of the book :";
+         cout<<"Enter the price of the tape :";
          cin>>price;
           if (price<=0){
+            cout<<"Invalid price given"<<endl;
             throw price;
         }
         else{
             cout<<"Valid price given..you may continue"<<endl;
         }
-         cout<<"Enter the play time of the tape : "<<endl;
+         
+         
+    }catch(float p){
+            title =" ";
+            price = 0;
+            play_time = 0;
+            return ;
+
+
+        }
+ 
+    catch(string t){
+            title =" ";
+            price = 0;
+            play_time = 0;
+    }
+    try{
+        cout<<"Enter the play time of the tape : "<<endl;
           cin>>play_time;
         if (play_time<=0){
+            cout<<"Invalid play time entered"<<endl;
             throw play_time;
         }
         else{
-            cout<<"Valid page time given..you may continue"<<endl;
+            cout<<"Valid play time given..you may continue"<<endl;
         }
-    }catch(int play_time){
-            this->title =" ";
-            this->price = 0;
-            this->play_time = 0;
-
-
-        }
-    catch(float price){
-       this->title =" ";
-            this->price = 0;
-            this->play_time = 0;
-    }
-    catch(string title){
-        this->title =" ";
-            this->price = 0;
-            this->play_time = 0;
+       
+    }   catch(float play){
+            title =" ";
+            price = 0;
+            play_time = 0;
     }
 }
 void Tape::get_details(){
-    cout<<"The title of the book is "<<title<<endl;
-    cout<<"The price of the book is "<<price<<endl;
-    cout<<"The play time of the book is"<<play_time<<endl;
+    cout<<"The title of the tape is "<<title<<endl;
+    cout<<"The price of the tape is "<<price<<endl;
+    cout<<"The play time of the tape is "<<play_time<<endl;
 }
 
 
