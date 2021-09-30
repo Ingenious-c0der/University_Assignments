@@ -58,33 +58,31 @@ class Student:
     def fibonacci_search(roll_no:int)->int:
         """Performs Fibonacci search on the class program list and returns the index of the needed element, Complexity O(logn)"""
         Student.program_list.sort()
-        work_list = Student.program_list
-        n = len(work_list)
-        for i in range(n+3):
-            if Student.Fibonacci(i)>=n:
-                x = i
-                fibo = Student.Fibonacci(x)
-                break
-        
+        n = len(Student.program_list)
+        i=0
+        while Student.Fibonacci(i)<n:
+              i+=1
+
+        fibo = Student.Fibonacci(i)
   
         fm = fibo 
-        fm1 = Student.Fibonacci(x-1)
+        fm1 = Student.Fibonacci(i-1)
         fm2 = fm-fm1
         offset = -1
         
         while fm> 1 :
-            i = min(offset+fm2, len(work_list)-1)
+            i = min(offset+fm2, len(Student.program_list)-1)
 
-            if work_list[i]==roll_no:
+            if Student.program_list[i]==roll_no:
                 return i
 
-            if work_list[i]>roll_no:
+            if Student.program_list[i]>roll_no:
 
                 fm = fm2
                 fm1 = fm1-fm2
                 fm2 = fm-fm1
 
-            if work_list[i]<roll_no:
+            if Student.program_list[i]<roll_no:
                 
                 fm=fm1
                 fm1 = fm2
@@ -105,7 +103,6 @@ if __name__=="__main__":
         student = Student(j)
     while True:
 
-
         choice = int(input("""******MENU*****\n Enter the choice\n1.Search using linear search\n2.Search using sentinel search\n3.Search using binary search\n4.Search using Fibonacci Search\n5.Exit\n"""))
         if choice==1:
             m = int(input("Enter the roll_no to be found : "))
@@ -114,6 +111,7 @@ if __name__=="__main__":
                 print(f"The element {m} was found at index {Student.linear_search(m)} in the Student list.")
             else:
                 print("Match not found")
+
         elif choice==2:
             m = int(input("Enter the roll_no to be found : "))
             return_value = Student.sentinel_search(m)
@@ -141,3 +139,5 @@ if __name__=="__main__":
 
         else:
             break
+
+
