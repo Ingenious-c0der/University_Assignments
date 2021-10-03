@@ -123,17 +123,17 @@ void MainWindow::scanfill(){
     std::sort(&store[0], &store[n]);
     x_at_ymin = store[0].x;
 
-    for(int i =0;i<n;i++){
+    for(int i =0;i<n-1;i++){
         x1[i] = store[i].x;
 
         y1[i] = store[i].y;
     }
 
 
-    x_r_points[0] = x_at_ymin;
-    x_l_points[0] = x_at_ymin;
-    y_r_points[0]= y1[0];
-    y_l_points[0]= y1[0];
+    x_r_points[0] =store[0].x;
+    x_l_points[0] =store[0].x;
+    y_r_points[0]= store[0].y;
+    y_l_points[0]= store[0].y;
     int r = 1; int l = 1;
 
     for (int j=1;j<n;j++){
@@ -209,3 +209,4 @@ void MainWindow::scanfill(){
     }
 
 }
+
