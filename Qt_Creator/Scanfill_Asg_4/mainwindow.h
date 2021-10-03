@@ -15,9 +15,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
      void DDA_line(float,float,float,float);
-      void display(int,int);
-      void scan_fill(int points[][2],int size);
-      void myfunct();
+      void display(int,int);     
+      void scanfill();
       int rgb[3];
 
 private slots:
