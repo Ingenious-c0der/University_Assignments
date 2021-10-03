@@ -4,6 +4,7 @@
 #include <QColorDialog>
 #include<QPainter>
 #include<iostream>
+
 QImage surface(400,400,QImage::Format_RGB888);
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -24,6 +25,10 @@ void MainWindow::DDA_line(float x1, float y1, float x2, float y2)
     float step;
        float dx = (x2-x1);
        float dy = (y2-y1);
+       if (dx==0 && dy==0){
+           display(x1,y1);
+       }
+       else{
        if (abs(dx)>=abs(dy))
        {
            step = abs(dx);
@@ -43,6 +48,7 @@ void MainWindow::DDA_line(float x1, float y1, float x2, float y2)
 
        }
        ui->label->setPixmap(QPixmap::fromImage(surface));
+       }
 }
 
 void MainWindow::display(int x, int y)
@@ -54,6 +60,7 @@ void MainWindow::display(int x, int y)
 
 
 void MainWindow::on_pushButton_clicked()
+
 {
     DDA_line(100,100,200,60);
     DDA_line(200,60,300,150);
@@ -78,71 +85,111 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    myfunct();
+    scanfill();
 }
 
-void MainWindow::myfunct()
-{
-        int x1[]={100,200,300,240,80,120};
-        int y1[]={100,60,150,250,200,150};
-        int i=0;
-        int n=5;
-        int ymin = 250, ymax=60;
-        int c,j,y;
-        float m[50],a[50],dx,dy,t;
 
-        for(i=0;i<n-1;i++)
-        {
-            DDA_line(x1[i],y1[i],x1[i+1],y1[i+1]);
+void MainWindow::scanfill(){
+
+    int x_at_ymin;
+    int x1[]={200,100, 120, 80, 300, 240 };
+    int y1[]={60, 100, 150, 200, 150, 250 };
+    int yc[] = {60, 100, 150, 200, 150, 250};
+    int x_l_points[100];
+    int x_r_points[100];
+    int y_l_points[100];
+    int y_r_points[100];
+    int n = sizeof(y1) / sizeof(y1[0]);
+
+    std::sort(y1, y1 + n);
+    for (int k=0;k<n;k++){
+        if (yc[k]==y1[0]){
+            x_at_ymin = x1[k];
+            break;
         }
+    }
+
+    x_r_points[0] = x_at_ymin;
+    x_l_points[0] = x_at_ymin;
+    y_r_points[0]= y1[0];
+    y_l_points[0]= y1[0];
+    int r = 1; int l = 1;
+
+    for (int j=1;j<n;j++){
+        if (x1[j]>x_at_ymin){
+            x_r_points[r] = x1[j];
+            y_r_points[r]= yc[j];
 
 
-
-        for(i=0;i<n;i++)
-        {
-            if(y1[i]>=ymax)
-                ymax=y1[i];
-            if(y1[i]<=ymin)
-                ymin=y1[i];
-            dx=x1[i+1]-x1[i];
-            dy=y1[i+1]-y1[i];
-            if(dx==0)
-                m[i]=0;
-            if(dy==0)
-                m[i]=1;
-            if(dx!=0 && dy!=0)
-                m[i]=dx/dy;
+            r+=1;
         }
-        for(y=ymax;y>=ymin;y--)
-        {
-            c=0;
-            for(i=0;i<n;i++)
-            {
-                if((y1[i]>y && y1[i+1] <=y) || (y1[i]<=y && y1[i+1]>y))
-    {
-                    a[c]=x1[i]+(m[i]*(y-y1[i]));
-                    c++;
+        if(x1[j]<x_at_ymin) {
+
+            x_l_points[l]=x1[j];
+            y_l_points[l]= yc[j];
+
+            l+=1;
+        }
+    }
+    x_l_points[4] = 240;
+    y_l_points[4]=250;
+    r+=1;
+    float x_l[1000];
+    x_l[0] = x_at_ymin;
+    float x_r[1000];
+    x_r[0] = x_at_ymin;
+    int b = 0;
+    int t = 0  ;
+    int offset_l = 0;
+    int offset_r = 0;
+
+
+    while (b<l){
+        float dx = x_l_points[b+1]-x_l_points[b];
+        float dy = y_l_points[b+1]-y_l_points[b];
+
+        for(int i=1;i<=abs(dy);i++){
+
+            x_l[i+offset_l] = x_l[i-1+offset_l]+(dx/dy);
+
+
             }
+        offset_l+=dy;
+        b+=1;
         }
-    for(i=0;i<c-1;i++)
-    {
-        for(j=0;j<c-1;j++)
-        {
-            if(a[j]>a[j+1])
-            {
-                t=a[j];
-                a[j]=a[j+1];
-                a[j+1]=t;
+
+
+    while (t<r-2){
+        float dx = x_r_points[t+1]-x_r_points[t];
+        float dy = y_r_points[t+1]-y_r_points[t];
+
+        for(int i=1;i<=abs(dy);i++){
+
+            x_r[i+offset_r] = x_r[i-1+offset_r]+(dx/dy);
+//            std::cout<<"Travel "<<x_r_points[t+1]<<"<-"<<x_r_points[t]<<std::endl;
+//            std::cout<<"dx/dy "<<dx/dy<<"dx :"<<dx<<"dy :"<<dy<<std::endl;
+//            std::cout<<"Point "<<x_r[i+offset_r]<<std::endl;
             }
-        }
-    }
-        for(i=0;i<c-1;i=i+3)
-        {
+        offset_r+=dy;
+        t+=1;
 
-            DDA_line(a[i],y,a[i+1],y);
 
-        }
+
     }
+    int ymin = y1[0];
+    int ymax = y1[n-1];
+    int c = 0 ;
+    while (ymin<ymax){
+        float x_l_value = x_l[c];
+        float x_r_value = x_r[c];
+        float y_value = ymin;
+//        std::cout<<"Left value : "<<x_l_value<<"Right value : "<<x_r_value<<std::endl;
+//        std::cout<<"Y value : "<<y_value<<std::endl;
+        c+=1;
+        ymin+=1;
+        DDA_line(x_r_value,y_value,x_l_value,y_value);
+
     }
 
+}
 
