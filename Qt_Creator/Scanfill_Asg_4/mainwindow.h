@@ -12,12 +12,21 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
      void DDA_line(float,float,float,float);
       void display(int,int);     
       void scanfill();
       int rgb[3];
+      void mousePressEvent(QMouseEvent *);
+      float points_x[1000];
+      float points_y[1000];
+      int point_count=0;
+
+
+signals:
+      void Mouse_Pressed();
 
 private slots:
       void on_pushButton_clicked();
@@ -28,7 +37,10 @@ private slots:
 
 
 
+
 private:
     Ui::MainWindow *ui;
 };
+
+
 #endif // MAINWINDOW_H
