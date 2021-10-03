@@ -4,15 +4,16 @@
 #include <QColorDialog>
 #include<QPainter>
 #include<iostream>
-
+#include <QMouseEvent>
+#include<QDebug>
 QImage surface(400,400,QImage::Format_RGB888);
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-}
 
+}
 struct Cood{
     int x;
     int y;
@@ -77,12 +78,21 @@ void MainWindow::display(int x, int y)
 void MainWindow::on_pushButton_clicked()
 
 {
+    int x1[]={100, 200, 120,300, 80,  240 };
+    int y1[]={100, 60, 150,150, 200,  250 };
     DDA_line(100,100,200,60);
     DDA_line(200,60,300,150);
     DDA_line(300,150,240,250);
     DDA_line(240,250,80,200);
-    DDA_line(80,200,120,150);
-    DDA_line(120,150,100,100);
+    DDA_line(80,200,150,150);
+    DDA_line(150,150,100,100);
+    for(int i=0;i<6;i++){
+        points_x[i]=x1[i];
+        points_y[i]=y1[i];
+    }
+    points_x[6]= 200;
+    points_y[6] = 60;
+    point_count=6;
     ui->label->setPixmap(QPixmap::fromImage(surface));
 }
 
@@ -105,14 +115,20 @@ void MainWindow::on_pushButton_3_clicked()
 
 
 void MainWindow::scanfill(){
-   int x1[]={100, 200, 120,300, 80,  240 };
-   int y1[]={100, 60, 150,150, 200,  250 };
-    int x_at_ymin;
-    int x_l_points[100];
-    int x_r_points[100];
-    int y_l_points[100];
-    int y_r_points[100];
-    int n = sizeof(y1) / sizeof(y1[0]);
+    float x1[1000];
+    float y1[1000];
+
+    for (int i =0;i<point_count;i++){
+        x1[i]=points_x[i];
+        y1[i]=points_y[i];
+    }
+
+    float x_at_ymin;
+    float x_l_points[100];
+    float x_r_points[100];
+    float y_l_points[100];
+    float y_r_points[100];
+    int n = point_count;
     Cood store[100] ;
     for(int i=0;i<n;i++){
 
@@ -208,5 +224,26 @@ void MainWindow::scanfill(){
 
     }
 
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    float x = event->position().x();
+    float y = event->position().y();
+
+    points_x[point_count] = x;
+    points_y[point_count] = y;
+//    points_x[point_count+1] = points_x[0];
+//    points_y[point_count+1] = points_y[0];
+
+//    std::cout<<points_x[point_count]<<points_y[point_count]<<std::endl;
+//    std::cout<<points_x[point_count-1]<<points_y[point_count-1]<<std::endl;
+    if (point_count>0){
+    DDA_line(points_x[point_count-1],points_y[point_count-1],points_x[point_count],points_y[point_count]);
+    }else{
+        display(x,y);
+    }
+    point_count+=1;
+    ui->label->setPixmap(QPixmap::fromImage(surface));
 }
 
