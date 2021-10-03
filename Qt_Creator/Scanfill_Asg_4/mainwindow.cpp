@@ -13,6 +13,21 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 }
 
+struct Cood{
+    int x;
+    int y;
+    bool operator<(const Cood& other)
+    { if (y==other.y){
+            if (x>other.x){
+                return false;
+            }else{
+                return true;
+            }
+        }else{
+      return y < other.y;
+        }
+    }
+};
 
 MainWindow::~MainWindow()
 {
@@ -90,24 +105,30 @@ void MainWindow::on_pushButton_3_clicked()
 
 
 void MainWindow::scanfill(){
-
+   int x1[]={100, 200, 120,300, 80,  240 };
+   int y1[]={100, 60, 150,150, 200,  250 };
     int x_at_ymin;
-    int x1[]={200,100, 120, 80, 300, 240 };
-    int y1[]={60, 100, 150, 200, 150, 250 };
-    int yc[] = {60, 100, 150, 200, 150, 250};
     int x_l_points[100];
     int x_r_points[100];
     int y_l_points[100];
     int y_r_points[100];
     int n = sizeof(y1) / sizeof(y1[0]);
+    Cood store[100] ;
+    for(int i=0;i<n;i++){
 
-    std::sort(y1, y1 + n);
-    for (int k=0;k<n;k++){
-        if (yc[k]==y1[0]){
-            x_at_ymin = x1[k];
-            break;
-        }
+        store[i].x = x1[i];
+        store[i].y = y1[i];
+
     }
+    std::sort(&store[0], &store[n]);
+    x_at_ymin = store[0].x;
+
+    for(int i =0;i<n;i++){
+        x1[i] = store[i].x;
+
+        y1[i] = store[i].y;
+    }
+
 
     x_r_points[0] = x_at_ymin;
     x_l_points[0] = x_at_ymin;
@@ -116,23 +137,19 @@ void MainWindow::scanfill(){
     int r = 1; int l = 1;
 
     for (int j=1;j<n;j++){
-        if (x1[j]>x_at_ymin){
+        if (x1[j]>x_at_ymin or y1[j]==store[n-1].y ){
             x_r_points[r] = x1[j];
-            y_r_points[r]= yc[j];
-
-
+            y_r_points[r]= y1[j];
             r+=1;
         }
-        if(x1[j]<x_at_ymin) {
-
+        if(x1[j]<x_at_ymin or y1[j]==store[n-1].y) {
             x_l_points[l]=x1[j];
-            y_l_points[l]= yc[j];
-
+            y_l_points[l]= y1[j];
             l+=1;
         }
-    }
-    x_l_points[4] = 240;
-    y_l_points[4]=250;
+
+
+        }
     r+=1;
     float x_l[1000];
     x_l[0] = x_at_ymin;
@@ -192,4 +209,3 @@ void MainWindow::scanfill(){
     }
 
 }
-
