@@ -4,9 +4,4 @@ given y.For filling these arrays up you need the travel points (transition betwe
 while traversing for left hand side and right hand side pixels of the polygon.The advantage of this algorithm is a x_l and x_r 
 run completely differently and are not related.
 
-Some Fixes still required -  (not implemented yet)
-1.The point order in the array matters , which should not matter 
-Solution - Construct a correspondance list for x1 and sort y1
-
-2.The end point needs to be in both the lists - 
-Solution - if x[1] at ymax append it in the list 
+Scope of improvement - Make use of cood structure throughout the code and avoid multiple arrays.
