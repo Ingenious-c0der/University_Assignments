@@ -1,0 +1,12 @@
+At the core of the logic , I have created 2 float arrays x_l[] and x_r[] and these arrays 
+contain the information about the leftmost point and right most point of the polygon for a 
+given y.For filling these arrays up you need the travel points (transition between the points) to initialize each value
+while traversing for left hand side and right hand side pixels of the polygon.The advantage of this algorithm is a x_l and x_r 
+run completely differently and are not related.
+
+Some Fixes still required -  (not implemented yet)
+1.The point order in the array matters , which should not matter 
+Solution - Construct a correspondance list for x1 and sort y1
+
+2.The end point needs to be in both the lists - 
+Solution - if x[1] at ymax append it in the list 
