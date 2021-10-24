@@ -7,11 +7,29 @@ private:
 	T* stack;
 	int top = -1;
 public:
-	Stack()
-    {
-		stack = new T[size];
-	}
-	void push(T const &val) {
+	Stack();
+    void pop();
+	void push(T const &val);
+
+	void show();
+
+
+
+};
+template<typename T , int size>
+void Stack<T,size>::pop(){
+        if (top == -1) 
+		{
+			cout << "Stack Underflow" << endl; 
+		}
+		else 
+		{
+			top--;
+		}
+}
+template<typename T , int size>
+void Stack<T,size>::push(T const& val){
+     {
 		if (top < size-1)
         {
 			top++;
@@ -21,27 +39,22 @@ public:
         {
 			cout << "stack overflow" << endl;
 		}
-	};
-	void pop() {
-		if (top == -1) 
-		{
-			cout << "Stack Underflow" << endl; 
-		}
-		else 
-		{
-			top--;
-		}
 	}
-	void show() {
+}
+template<typename T , int size>
+Stack<T,size>::Stack(){
+    {
+		stack = new T[size];
+	}
+    
+}
+template<typename T , int size>
+void Stack<T,size>::show() {
 		for (int i = 0; i < top+1; i++) {
 			cout << stack[i] <<" ";
 		}
         cout<<endl;
 	}
-
-
-
-};
 
 
 int main() {
