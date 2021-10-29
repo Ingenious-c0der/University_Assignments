@@ -1,4 +1,4 @@
-#this file contains large amount of graveyard code. Don't expect to find anything proper here , its just a code dump of me solving differene competitve programming questions.
+#this file contains large amount of graveyard code. Don't expect to find anything constructive here , its just a code dump of me solving different competitve programming questions.
 
 
 
