@@ -18,6 +18,7 @@ void write_to_file_e(string filename){
             cin>>choice;
             if (choice=="N") break; 
         }
+        out.close()
     cout<<"file closed successfully after writing"<<endl;
     }
     else{
@@ -107,6 +108,7 @@ void read_from_file_f(string filename){
     }
     cout<<endl;
     cout<<"File closed successfully after reading"<<endl;
+        file.close();
     }
 }
 
