@@ -7,7 +7,7 @@ void write_to_file_e(string filename){
     string data;
     string choice; 
     ofstream out; 
-    out.open(filename);
+    out.open(filename,ios::app);
     if (!out.fail()){
         while(true){
             cout<<"Enter the name and age of the person : ";
@@ -27,7 +27,7 @@ void write_to_file_e(string filename){
 }
 void read_from_file_e(string filename){
      ifstream in;
-    in.open(filename,ios::app);
+    in.open(filename);
     if(in.fail()){
         std::cerr<<"Could not open File"<<endl;
         exit(1);
