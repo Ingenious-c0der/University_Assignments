@@ -1,8 +1,8 @@
 #include<iostream>
 #include<fstream>
-#include<ctype.h>
 using namespace std;
 
+//using extraction and insertion operators
 void write_to_file_e(string filename){
     string data;
     string choice; 
@@ -46,6 +46,7 @@ void read_from_file_e(string filename){
     cout<<"File closed successfully after reading "<<endl;
 
 }
+//using get and put functions
 void write_to_file_f(string filename){
     string choice; 
     ofstream out; 
@@ -89,14 +90,14 @@ void read_from_file_f(string filename){
     else{
     while(count<end){
         cout<<"Name : ";
-        while(c!=' ' && !file.eof())
+        while(c!=' ')
         {
         file.get(c);
         count+=1;
         cout<<c;
         }
         cout<<"Age : ";
-        while(c!='\n' && !file.eof())
+        while(c!='\n')
         {
         file.get(c);
         count+=1;
