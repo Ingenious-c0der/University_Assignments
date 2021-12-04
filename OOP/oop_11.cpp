@@ -85,7 +85,7 @@ while(1){
     switch(choice){
         
 
-    }
+    }//too lazy to implement switch , ignore 79-88 if you want :)
 
 
 
