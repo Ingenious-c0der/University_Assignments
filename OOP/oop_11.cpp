@@ -19,6 +19,7 @@ class Employee{
     friend bool remove_emp(Employee& ,string);
     void show_details();
     friend void get_details(Employee&);
+    string get_name(){return this->name; };
     
 
 };
@@ -78,82 +79,82 @@ void display(Employee& e){
 int main()
 {   string Name;
     vector<Employee> Employees;
+    vector<Employee>::iterator it;
 while(1){
-    cout<<"******Menu*******\n1. Add Employee\n2. Remove Employee\n3. Edit Employee\n4. Display Employee\n5. Exit\n"<<endl;
+    cout<<"******Menu*******\n1. Add Employee\n2. Remove Employee\n3. Edit Employee\n4. Display All Employees \n5. Search Employee\n6. Sort Employees\n7.Exit"<<endl;
     int choice;
     cin>>choice;
     switch(choice){
-        
+        case 1:
+        {
+            Employee e ; 
+            get_details(e);
+            Employees.push_back(e);
+            break;
+        }
 
-    }//too lazy to implement switch , ignore 79-88 if you want :)
+        case 2:
+            cout<<"Enter the name of the Employee who is to be removed : ";
+            cin>>Name;
+            Employees.erase(remove_if(Employees.begin(), Employees.end(), [Name](Employee E){return (E.get_name() == Name);}),Employees.end());
+            cout<<"Employees with name "<<Name<<" removed"<<endl;
+            break;
+        
+        case 3:
+        {
+            cout<<"Enter the Name of the employee to be edited : ";
+            cin>>Name;
+            Employee to_search_2(Name);
+            it = find(Employees.begin(),Employees.end(),to_search_2);
+            if (it!=Employees.end()){
+                    cout<<"Employee found"<<endl;
+                    cout<<"Re enter the employee details please : "<<endl;
+                    get_details(*it);
+                    cout<<"Employee details edited , New Details are :  "<<endl;
+                    it->show_details();
+                    cout<<"***********************"<<endl;
+                }
+            else{
+                cout<<"Employee not found"<<endl;
+                 }
+            break;
+        }
+
+        case 4:
+            for_each(Employees.begin(),Employees.end(),display);
+            break ;
+
+        case 5:
+            {
+            cout<<"Enter the name of the employee to be searched : ";
+            cin>>Name;
+            Employee to_search(Name);
+            vector<Employee>::iterator it;
+            it = find(Employees.begin(),Employees.end(),to_search);
+            if (it!=Employees.end()){
+                cout<<"Employee found"<<endl;
+                it->show_details();
+                cout<<"***********************"<<endl;
+                
+            }
+            else{
+                cout<<"Employee not found"<<endl;
+            }
+            break ;
+            }
+
+        case 6:
+            std::sort(Employees.begin(),Employees.end());
+            for_each(Employees.begin(),Employees.end(),display);
+            break;
+        case 7:
+            exit(0);
+    }
 
 
 
 
 }
-
-    //creating vector of Employee objects
-    vector<Employee> Employees;
-    Employee e1,e2,e3;
-    Employees.push_back(e1);
-    Employees.push_back(e2);
-    Employees.push_back(e3);
-
-    //getting the details of the employees
-    for_each(Employees.begin(),Employees.end(),get_details);
-    cout<<"Employee details entered : "<<endl;
-    for_each(Employees.begin(),Employees.end(),display);
-    cout<<"***********************"<<endl;
-    //searching for an employee for his details
-    cout<<"Enter the name of the employee to be searched : ";
-    cin>>Name;
-    Employee to_search(Name);
-    vector<Employee>::iterator it;
-    it = find(Employees.begin(),Employees.end(),to_search);
-    if (it!=Employees.end()){
-        cout<<"Employee found"<<endl;
-        it->show_details();
-        cout<<"***********************"<<endl;
-        
-    }
-    else{
-        cout<<"Employee not found"<<endl;
-    }
-
-    //sorting employees according to their salaries
-    std::sort(Employees.begin(),Employees.end());
-
-    //displaying sorted employees
-    for_each(Employees.begin(),Employees.end(),display);
-
-
-    //removing an employee by name
-    cout<<"Enter the name of the Employee who is to be removed : ";
-    cin>>Name;
-    remove_if(Employees.begin(), Employees.end(), [Name](Employee& E){return remove_emp(E,Name);}); // using lambda expression to pass in extra parameter
-    cout<<"Employees with name "<<Name<<" removed"<<endl;
-    
-    //editing the employee
-    cout<<"Enter the Name of the employee to be edited : ";
-    cin>>Name;
-    Employee to_search_2(Name);
-    it = find(Employees.begin(),Employees.end(),to_search_2);
-    if (it!=Employees.end()){
-        cout<<"Employee found"<<endl;
-        cout<<"Re enter the employee details please : "<<endl;
-        get_details(*it);
-        cout<<"Employee details edited , New Details are :  "<<endl;
-        it->show_details();
-        cout<<"***********************"<<endl;
-    }
-    else{
-        cout<<"Employee not found"<<endl;
-    }
-
-
-    cout<<"Final Employee details after operations : "<<endl;
-    for_each(Employees.begin(),Employees.end(),display);
-
 
     return 0;
 }
