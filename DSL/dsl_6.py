@@ -31,11 +31,11 @@ class Student :
 if __name__ == "__main__":
     n = int(input("Enter the number of students : "))
     for i in range(n):
-        r = int(input(f"The roll_no of student of student {i+1} : "))
+        r = float(input(f"The percentage of student  {i+1} : "))
         student = Student(r)
 
     while True:
-        choice = int(input("****MENU****\n1.Search roll number with Quick Sort"))
+        choice = int(input("****MENU****\n1.Sort with Quick Sort"))
         if choice==1:
-            print(f"The sorted string is {Student.QuickSort(Student.Student_list,0,n-1)}")
+            print(f"The sorted list of percentages is {Student.QuickSort(Student.Student_list,0,n-1)}")
         
