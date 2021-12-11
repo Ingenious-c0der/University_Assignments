@@ -21,7 +21,7 @@ Node * first = new Node;
 int bits = 0 ;   
 public: 
 char sum_table[2][2][2] = {{{'0','1'},{'1','0'}},{{'1','0'},{'0','1'}}};
-char carry_table[2][2][2] = {{{'0','0'},{'0','1'}},{{'0','1'},{'1','1'}}};
+int carry_table[2][2][2] = {{{0,0},{0,1}},{{0,1},{1,1}}};
 BinaryLL(const char*);
  ~BinaryLL(); 
  void set_first(); 
@@ -152,7 +152,7 @@ BinaryLL BinaryLL::addbinary(BinaryLL& other){
         }
 
         BinaryLL result = BinaryLL(bin_str);
-        delete bin_str;
+        delete[] bin_str;
         
         
         return result;
@@ -163,7 +163,7 @@ BinaryLL BinaryLL::addbinary(BinaryLL& other){
 
 BinaryLL BinaryLL::addbinary_2(BinaryLL& other) {
     //making it more efficient by adding a hash table for binary addition without using if else statements
-    //still under working 
+
      int carry = 0; 
         Node * last_self = nullptr; 
         Node * last_other  = nullptr;
@@ -181,12 +181,14 @@ BinaryLL BinaryLL::addbinary_2(BinaryLL& other) {
         for(auto ptr = last,ptr_2 = this->bits>other.bits ? last_other:last_self ; ptr_2->prev!=nullptr; ptr = ptr->prev,ptr_2 = ptr_2->prev,i++)
         {
             bin_str[i] = sum_table[carry][ptr->bit][ptr_2->bit];
+
             carry = carry_table[carry][ptr->bit][ptr_2->bit];
+            
             temp = ptr; 
             
         }
         for(auto ptr = temp->prev; ptr->prev!=nullptr;ptr = ptr->prev){
-            
+ 
             bin_str[i] = sum_table[carry][ptr->bit][0];
             carry = carry_table[carry][ptr->bit][0];
             i++;
@@ -194,11 +196,8 @@ BinaryLL BinaryLL::addbinary_2(BinaryLL& other) {
         for(int i= 0 ; i<max_bit/2;i++){  
             swap(bin_str[i],bin_str[max_bit-i-1]);
         }
-         for(int i= 0 ; i<max_bit;i++){  
-            cout<<bin_str[i];
-        }
 
-        BinaryLL result = BinaryLL("10101");
+        BinaryLL result = BinaryLL(bin_str);
         
         delete[] bin_str;
         
@@ -208,9 +207,10 @@ BinaryLL BinaryLL::addbinary_2(BinaryLL& other) {
 }
 int main(){  
     
-    BinaryLL bin_list("1111") ;
+    BinaryLL bin_list("1001111") ;
     BinaryLL bin_list_2("1111") ;
-    BinaryLL result = bin_list.addbinary_2(bin_list_2);//use addbinary function for now instead
+    BinaryLL result = bin_list.addbinary_2(bin_list_2);
+    result.display();
 
     return 0 ; 
 
