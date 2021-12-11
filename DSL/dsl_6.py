@@ -6,29 +6,22 @@ class Student :
 
 
 
-    def partition(low,high,array):
-        pivot_index = low
-        pivot = array[pivot_index]
-        
-        while low<high:
-            while  low<len(array) and array[low]<=pivot :
-                low+=1
-            while array[high]>pivot :
-                high-=1
-            if low<high:
-                array[low],array[high]= array[high],array[low]
-            
-        array[high], array[pivot_index] = array[pivot_index], array[high]
+    def QuickSort(lst,start,end):
+        i = start 
+        j = end 
+        if start<end:
+            pivot = lst[i]
+            while i<j:
+                while i<len(lst) and lst[i]<=pivot:
+                    i+=1
+                while  lst[j]>pivot:
+                    j-=1
+                if j>i:
+                    lst[i],lst[j] = lst[j],lst[i]
 
-        return high
-
-    def quick_sort(low,high,array):
-        if high>low:
-            mid = Student.partition(low,high,array)
-            Student.quick_sort(low,mid-1,array)
-            Student.quick_sort(mid+1,high,array)
-        else:
-            return 0 
+            lst[start],lst[j] = lst[j],lst[start]
+            QuickSort(lst,start,j-1)
+            QuickSort(lst,j+1,end)
 
 
 
@@ -44,5 +37,5 @@ if __name__ == "__main__":
     while True:
         choice = int(input("****MENU****\n1.Search roll number with Quick Sort"))
         if choice==1:
-            print(f"The sorted string is {Student.quick_sort(0,n-1,Student.Student_list)}")
+            print(f"The sorted string is {Student.QuickSort(Student.Student_list,0,n-1)}")
         
