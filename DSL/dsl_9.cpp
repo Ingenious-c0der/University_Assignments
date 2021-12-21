@@ -75,7 +75,7 @@ void Stack::push(char c){
     Node * temp = new Node(c);
     
     if((int)top->paren - (int)temp->paren<0 && (int)top->paren - (int)temp->paren> -3) //hunting a shorthand for this brb
-        pop(); 
+    {pop();delete temp;} 
     else{
             temp->prev = top;
             top = temp;
