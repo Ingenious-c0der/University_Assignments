@@ -51,7 +51,7 @@ class Mystring():
             rev_lst = (list(self.main_list[i]))[::-1]
             if all([list(self.main_list[i]) == rev_lst,self.main_list[i]!="",len(self.main_list[i])!=1,len(self.main_list)!=2]):
                 palindromes.append(self.main_list[i])
-        return palindromes if (len(palindromes)!=0) else False
+        return palindromes if palindromes else False
 
 
     def occurence_indices(self)->list:
