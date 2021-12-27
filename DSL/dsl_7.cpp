@@ -38,7 +38,6 @@ void BinaryLL::set_first(){
     first->prev = nullptr;
 }
 
-
 BinaryLL::BinaryLL(const char* binary){ 
     int l = strlen(binary); bits = l ;  
     set_first(); 
@@ -205,12 +204,46 @@ BinaryLL BinaryLL::addbinary_2(BinaryLL& other) {
         return result;
 
 }
-int main(){  
-    
-    BinaryLL bin_list("1001111") ;
-    BinaryLL bin_list_2("1111") ;
-    BinaryLL result = bin_list.addbinary_2(bin_list_2);
-    result.display();
+int main(){ 
+    int length; 
+    cout<<"Enter the number of bits in the binary number : ";
+    cin>>length; 
+    char* binary = new char[length]; 
+    int choice; 
+    while(true){
+        cout<<"Enter the Binary number : ";
+        cin>>binary ; 
+        BinaryLL b1(binary);
+        cout<<"*****Menu*****\n1.Compute 1's complement\n2.Compute 2's complement\n3.Add binary number\n4.Exit : ";
+
+        cin>>choice;
+        switch(choice){
+            case 1 :{
+                b1.ones_complement();
+                b1.display();
+                break;
+            }
+            case 2 :{
+                b1.twos_complement();
+                b1.display();
+                break;
+            }
+            case 3 :{
+                cout<<"Enter the other binary number : ";
+                cin>>binary;
+                BinaryLL temp = BinaryLL(binary); 
+                BinaryLL b2 = b1.addbinary_2(temp);
+                b2.display();
+                break; 
+
+            }
+            case 4 :
+                delete[] binary;
+                exit(0);
+        }
+
+    }
+
 
     return 0 ; 
 
