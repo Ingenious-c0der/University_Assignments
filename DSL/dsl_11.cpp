@@ -2,11 +2,11 @@
 using namespace std;
 class Node{
     friend class Queue;
-    int data;
+    string data;
     Node *next;
     public:
 
-    Node(int d){
+    Node(string d){
         data=d;
         next=nullptr;
     }
@@ -16,7 +16,7 @@ class Queue{
     Node * front , *rear = nullptr;
     public:
     Queue();
-    void enqueue(int );
+    void enqueue(string);
     void dequeue();
     void displayQueue();
     ~Queue();
@@ -42,7 +42,7 @@ void Queue::dequeue(){
         }
     }
 
-void Queue::enqueue(int d){
+void Queue::enqueue(string d){
         Node * temp = new Node(d);
         if(rear == nullptr){
             front = rear = temp ;
@@ -70,15 +70,27 @@ Queue::~Queue(){
 
 int main()
 {
-    Queue Q ; 
-    Q.enqueue(5);
-    Q.enqueue(8);
-    Q.enqueue(7);
-    Q.displayQueue();
-    Q.dequeue();Q.dequeue();Q.dequeue();Q.dequeue();
-    Q.enqueue(9);
-    Q.enqueue(8);
-    Q.dequeue();
-    Q.displayQueue();
-    return 0;
+    int choice;
+    Queue Q ;
+    string job; 
+    while(true){
+    cout<<"***Menu***\n1. Enqueue\n2.Dequeue\n3.Display Queue"<<endl;
+    cin>>choice;
+    switch(choice){
+        case 1 :
+            cout<<"Enter the Job to be enqueued : ";
+            cin>>job;
+            Q.enqueue(job);
+            break;
+        case 2 :
+            Q.dequeue();
+            break;
+        case 3 :
+            Q.displayQueue();
+            break;
+
+    }
+    
+}
+return 0;
 }
