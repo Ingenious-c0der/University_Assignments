@@ -1,4 +1,5 @@
 #include <iostream>
+#include<vector>
 using namespace std;
 //Beginning with an empty binary tree, Construct binary tree by inserting the values in the order given. After constructing a binary tree perform following operations on it-
 //
@@ -81,11 +82,12 @@ T Stack<T, size>::get_top()
 
 class Node{
     char data;
-    Node* left_child = nullptr;
+    Node * left_child = nullptr;
     Node * right_child  = nullptr;
-    
     explicit Node(char d){
         data = d ;
+        left_child = nullptr; 
+        right_child = nullptr ; 
     }
     friend class Binary_Tree;
 };
@@ -95,7 +97,20 @@ class Binary_Tree {
 public:
 
     Binary_Tree() { root = nullptr; };
-
+    Binary_Tree(const Binary_Tree& other){
+        root  = copyTree(other.root);
+    }
+    void swap(Binary_Tree& other){std::swap(root,other.root);}
+    Binary_Tree& operator = (Binary_Tree copy){swap(copy);return *this;}
+    Node* copyTree(Node* root){
+    if (root == nullptr) {
+        return nullptr;
+    }
+    Node* root_copy = new Node(root->data);
+    root_copy->left_child = copyTree(root->left_child);
+    root_copy->right_child = copyTree(root->right_child);
+    return root_copy;
+}
     void create(char x) {
         if (root)
             insert(root, x);
@@ -230,15 +245,13 @@ public:
             delete t ;
         }
     }
-    void operator = ( const Binary_Tree &T){
-
-    }
 
     int height_of_tree(Node* t){
         if(!t)
             return 0;
         int l = height_of_tree(t->left_child);
         int r = height_of_tree(t->right_child);
+        
         return max(l,r) + 1;
     }
 
@@ -284,17 +297,11 @@ int main(){
             b1.insert(b1.get_root(), root_val);
         }
     }
-    cout<<"Inorder Traversal :",b1.recursive_in_order(b1.get_root());
-    // cout<<"PreOrder Traversal :",b1.recursive_pre_order(b1.get_root());
-    // cout<<"PostOrder Traversal :",b1.recursive_post_order(b1.get_root());
-    // cout<<"Non-Recursive Inorder Traversal :",b1.Non_rec_in_order();
-    // cout<<"Non-Recursive PreOrder Traversal :",b1.Non_rec_pre_order();
-    // cout<<"Non-Recursive PostOrder Traversal :",b1.Non_rec_post_order();
-    cout<<"Height of the tree : "<<b1.height_of_tree(b1.get_root());
-    b1.mirror_tree(b1.get_root());	
-    cout<<"Mirror of the tree : ";
-    b1.recursive_in_order(b1.get_root());
-    return 0 ;
 
+    Binary_Tree b2  ;
+    b2= b1 ;
+    cout<<"b2 info : ";
+    cout<<b2.height_of_tree(b2.get_root())<<endl;
+    return 0 ;
 
 }
