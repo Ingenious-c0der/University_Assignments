@@ -220,7 +220,7 @@ public:
 			parent->left = nullptr; 
 			delete(to_be_deleted);
 		}
-		cout<<"root val : "<<root->keyword<<endl; 
+		
 
 	}
 };
