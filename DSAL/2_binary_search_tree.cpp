@@ -19,10 +19,7 @@ public:
 		right = nullptr;
 		left = nullptr;
 	}
-	~Node(){
-		delete right; 
-		delete left; 
-	}
+
 	friend class BinarySearchTree;
 };
 class BinarySearchTree{
@@ -76,7 +73,7 @@ public:
 			cout<<"empty binary search tree"<<endl ;
 			return ;
 		}
-		if(n){
+		if(n!=nullptr){
 			display_sorted(n->left);
 			cout<<n->keyword<<" : "<<n->meaning<<endl;
 			display_sorted(n->right);
@@ -123,13 +120,13 @@ public:
 			return n;
 		else if (keyword>n->keyword){
 			if(n->right)
-				Search_tree_return_node(n->right,keyword);
+				 Search_tree_return_node(n->right,keyword);
 			else
 				return nullptr;
 		}
 		else{
 			if(n->left)
-				Search_tree_return_node(n->left,keyword);
+				 Search_tree_return_node(n->left,keyword);
 			else
 				return nullptr;
 		}
@@ -181,12 +178,26 @@ public:
 		}
 
 		Node * to_be_deleted = child;
-		//isolated root case (can be removed after overthinking a bit. it just seems to work rn )
+		
 		if(child == parent){
 			if(child->left == nullptr and child->right == nullptr){
 				root = nullptr;
 				delete(child);
 				return ; 
+			}
+			if(child->left == nullptr and child->right!=nullptr)
+			{
+				Node* to_be_deleted = root ; 
+				root = child->right; 
+				delete(to_be_deleted);
+				return ;				
+			}
+			if(child->left != nullptr and child->right==nullptr)
+			{
+				Node* to_be_deleted =root; 
+				root = child->left; 
+				delete(to_be_deleted);
+				return;
 			}
 			
 		}
@@ -214,12 +225,28 @@ public:
 			delete(to_be_deleted);
 			return;
 		}
+		if(to_be_deleted->left != nullptr)
+		{
+			if(parent->left == to_be_deleted)
+				parent->left = to_be_deleted->left; 
+			if(parent->right ==  to_be_deleted )
+				parent->right = to_be_deleted->left; 
+			to_be_deleted->right = nullptr; 
+			delete(to_be_deleted);
+			return;
+		}
 		//case III , leaf node 
 		if(to_be_deleted->right == nullptr)
 		{
-			parent->left = nullptr; 
+			if(parent->left == to_be_deleted)
+				parent->left = nullptr; 
+			if(parent->right ==  to_be_deleted )
+				parent->right = nullptr; 
+			
 			delete(to_be_deleted);
 		}
+		cout<<"root val : "<<root->keyword<<endl;
+		cout<<root->left->keyword;
 		
 
 	}
