@@ -5,29 +5,13 @@ using namespace std;
 // solve problem by suggesting appropriate data structure
 // graph => minimum spanning tree
 
-class Node
-{
-    string officeName = "";
-
-public:
-    Node(string officeName)
-    {
-        this->officeName = officeName;
-    }
-    Node()
-    {
-    }
-
-    friend class Graph;
-};
 
 class Graph
 {
 
     int **matrix;
     int max_ver = 0;
-    int *generated;
-    Node *officeList;
+    string *officeList;
     static int index;
 
 public:
@@ -47,12 +31,7 @@ public:
             }
         }
         max_ver = max_vertices;
-        generated = new int[max_ver];
-        for (int i = 0; i < max_ver; i++)
-        {
-            generated[i] = 0;
-        }
-        officeList = new Node[max_ver];
+        officeList = new string[max_ver];
     }
     ~Graph()
     {
@@ -67,7 +46,7 @@ public:
     {
         if (index < max_ver)
         {
-            officeList[index++] = Node(name);
+            officeList[index++] = name;
         }
         else
         {
@@ -78,7 +57,7 @@ public:
     {
         for (int i = 0; i < max_ver; i++)
         {
-            if (officeList[i].officeName == name)
+            if (officeList[i] == name)
             {
                 return i;
             }
@@ -151,7 +130,7 @@ public:
         cout << "Adjecency Matrix : " << endl;
         for (int i = 0; i < max_ver; i++)
         {
-            cout << officeList[i].officeName << " ";
+            cout << officeList[i] << " ";
         }
         cout << endl;
 
@@ -168,7 +147,7 @@ public:
         int tc = 0;
         for (int i = 1; i < max_ver; i++)
         {
-            cout << officeList[parent[i]].officeName << " - " << officeList[i].officeName << "\t" << matrix[i][parent[i]] << endl;
+            cout << officeList[parent[i]] << " - " << officeList[i] << "\t" << matrix[i][parent[i]] << endl;
             tc += matrix[i][parent[i]];
         }
         cout << "Total Cost : " << tc << endl;
