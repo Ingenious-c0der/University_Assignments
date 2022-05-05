@@ -162,7 +162,7 @@ public:
         }
     }
     // using adjecency list for graph representation is always preferable since otherwise
-    // you need to keep a visited list to make sure you queue back a node you have already printed
+    // you need to keep a visited list to make sure you do not queue back a node you have already printed
     // using kahns (BFS:queue) algo , can be done using DFS:stack too
     void topological_sort()
     {
