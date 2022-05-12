@@ -62,7 +62,7 @@ int Heap::deleteElement()
     array[0] = array[current_size - 1];
     int index = 0;
 
-    while ((array[index] < array[2 * index + 2] || array[index] < array[2 * index + 1]) && 2 * index + 1 < current_size)
+    while ((array[index] < array[2 * index + 2] || array[index] < array[2 * index + 1]) && 2 * index + 2 < current_size)
     {
 
         if (array[index * 2 + 1] > array[index * 2 + 2])
@@ -80,7 +80,10 @@ int Heap::deleteElement()
             index = index * 2 + 2;
         }
     }
+    array[current_size-1] = deleted; //storing the element back in the dissolved array
     current_size--;
+    
+    
     return deleted;
 }
 
@@ -89,14 +92,16 @@ void Heap::heapSort()
     for (int i = 0; i < max_size; i++)
     {
         int top = deleteElement();
-        cout << top << " ";
+        //cout<<top<<" ";
+        //uncomment if you want descending order 
+       
     }
     cout << endl;
 }
 
 void Heap::displayHeap()
 {
-    for (int i = 0; i < current_size; i++)
+    for (int i = 0; i < max_size; i++)
     {
         cout << array[i] << " ";
     }
@@ -112,6 +117,9 @@ void Sorter::sort(int *arr, int max_size)
     }
     cout << "The heap sorted elements are :";
     h.heapSort();
+    //since I am using a max heap , to display in ascending order
+    //I have to use the decomposed array 
+    h.displayHeap();
 }
 int main()
 {
