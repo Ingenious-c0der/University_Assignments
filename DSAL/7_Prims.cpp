@@ -95,9 +95,59 @@ public:
         }
         return min_index;
     }
+    //for smooth brainers like me 
+    void simplifiedPrims()
+    {   
+        int mst[max_ver] = {0};
+        int total = 0 ;
+        int selected[max_ver]  = {0};
+        selected[0] = 1 ;
+        int edge_count = 0 ; 
+        int y = 0 ; 
+        int x  = 0;
+        while(edge_count < max_ver-1)
+        {
+
+            int min = INT_MAX; 
+            for( int i = 0 ; i< max_ver; i++)
+            {
+                if (selected[i] == 1)
+                {
+
+                    for(int j = 0; j<max_ver ;j++)
+
+                    {
+                        if(selected[j] == 0 && matrix[i][j])
+                        {
+                            if(min> matrix[i][j])
+                            {
+                                min = matrix[i][j];
+                                x = i ; 
+                                y = j ;
+                            }
+                        }
+
+                    }
+
+                }
+            }
+           
+            cout << x << " - " << y << " :  " << matrix[x][y]<<endl;
+            total+= matrix[x][y];
+            selected[y] = 1; 
+            edge_count++; 
+
+        }
+      
+        cout<<"Total cost "<<total<<endl;
+
+
+
+    }
 
     void PRIMS()
     {
+        
         int parent[max_ver] = {0};
         int key[max_ver] = {0};
         int mstSet[max_ver] = {0};
@@ -191,7 +241,8 @@ int main()
     g.addLine("C", "F", 2);
     g.addLine("E", "F", 3);
 
-    g.PRIMS();
+    //g.PRIMS();
+    g.simplifiedPrims();
 
     return 0;
 }

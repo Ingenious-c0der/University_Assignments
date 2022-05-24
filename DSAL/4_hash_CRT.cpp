@@ -1,5 +1,10 @@
 #include<iostream>
 using namespace std;
+
+//declare a max_size var globally , and avoid hard codingt the
+//comparison ints  
+
+
 class Record;
 class Hash{
 	Record* HashTable_Wrlc;
@@ -7,7 +12,7 @@ class Hash{
 	int max_val = 0 ;
 public:
 	Hash(int);
-	bool insert(string, long int);
+	bool insert(string, long long int);
 	int _hash(Record);
 	void search(string);
 	void _delete(string);
@@ -18,12 +23,12 @@ class Record{
 
 public:
 	string name;
-		long int tele_number;
+		long long int tele_number;
 	Record(){
 		name = "";
 		tele_number = 0 ;
 	}
-	Record(string name ,long int tele_number){
+	Record(string name ,long long int tele_number){
 		this->name = name ;
 		this->tele_number = tele_number;
 	}
@@ -50,7 +55,7 @@ Hash::~Hash(){
     delete HashTable_Wrlc;
 }
 
-bool Hash::insert(string Name , long int tele_number){
+bool Hash::insert(string Name , long long int tele_number){
     int count; 
 	Record r(Name,tele_number);
     int i = _hash(r);
@@ -61,13 +66,13 @@ bool Hash::insert(string Name , long int tele_number){
         r = t; 
 	}
 	else{
-		while(HashTable_Wrlc[i%10].name != "" && count < 10){
+		while(HashTable_Wrlc[i% max_val].name != "" && count < max_val){
             count++;
             i++;
            
         }
-		if(count!=10){
-			HashTable_Wrlc[i%10] = r;
+		if(count!=max_val){
+			HashTable_Wrlc[i%max_val] = r;
            
 		}
 		else{
@@ -82,12 +87,12 @@ bool Hash::insert(string Name , long int tele_number){
      i = _hash(r);
      count = 0 ;
      
-    while(HashTable_Worlc[i%10].name !="" && count < 10){
+    while(HashTable_Worlc[i%max_val].name !="" && count < max_val){
         i++;
         count++; 
     }
-    if(count!=10){
-        HashTable_Worlc[i%10] = r;
+    if(count!=max_val){
+        HashTable_Worlc[i%max_val] = r;
         return true; 
     }else{
         cout<<"No empty place find for inserting the record in hashtable without replacement"<<endl;
@@ -100,9 +105,8 @@ bool Hash::insert(string Name , long int tele_number){
 
 int Hash::_hash(const Record r){
 
-	char first =  r.name[0];
-
-	return first%10;
+	//can be mod%26 
+	return tolower(r.name[0])%max_val;
 
 }
 
@@ -113,24 +117,24 @@ void Hash::search(string Name){
 	int index = _hash(Record(Name, 0));
 	cout<<index;
 
-    while(HashTable_Wrlc[index%10].name != Name && comparisons<11){
+    while(HashTable_Wrlc[index%max_val].name != Name && comparisons<11){
         comparisons++;
     }
     if(comparisons!=11){
         cout<<"Record found in the hashtable with replacement. With "<<comparisons<<" comparisons"<<endl;
-         HashTable_Wrlc[index%10].display_record();
+         HashTable_Wrlc[index%max_val].display_record();
     }else{
         cout<<"Record not found in the hashtable with replacement"<<endl;
     }
 
     comparisons = 1; 
     index = _hash(Record(Name, 0));
-    while(HashTable_Worlc[index%10].name != Name && comparisons<11){
+    while(HashTable_Worlc[index%max_val].name != Name && comparisons<11){
         comparisons++;
     }
     if(comparisons!=11){
         cout<<"Record found in the hashtable without replacement. With "<<comparisons<<" comparisons"<<endl;
-         HashTable_Worlc[index%10].display_record();
+         HashTable_Worlc[index%max_val].display_record();
     }else{
         cout<<"Record not found in the hashtable without replacement"<<endl;;
     }
@@ -144,12 +148,12 @@ void Hash::search(string Name){
 void Hash::_delete(string Name){
     int comparisons = 1 ;
 	int index = _hash(Record(Name, 0));
-    while(HashTable_Wrlc[index%10].name != Name && comparisons<11){
+    while(HashTable_Wrlc[index%max_val].name != Name && comparisons<11){
         comparisons++;
     }
     if(comparisons!=11){
       
-         HashTable_Wrlc[index%10].delete_record();
+         HashTable_Wrlc[index%max_val].delete_record();
          cout<<"Record deleted from hashtable with replacment"<<endl;
     }else{
         cout<<"Record to be deleted not found in the hashtable with replacement"<<endl;
@@ -157,12 +161,12 @@ void Hash::_delete(string Name){
 
     comparisons = 1; 
     index = _hash(Record(Name, 0));
-    while(HashTable_Worlc[index%10].name != Name && comparisons<11){
+    while(HashTable_Worlc[index%max_val].name != Name && comparisons<11){
         comparisons++;
     }
     if(comparisons!=11){
      
-         HashTable_Worlc[index%10].delete_record();
+         HashTable_Worlc[index%max_val].delete_record();
           cout<<"Record deleted form hashtable without replacement"<<endl;
 
     }else{
@@ -183,10 +187,12 @@ int main(){
 			cin>>choice;
 			switch(choice){
 			case 1:{
-                cout<<"Enter the name and telephone number to be inserted"<<endl;
-                string name ;
-                long int tele_number ;
-                cin>>name>>tele_number;
+				string name ;
+                cout<<"Enter the name : ";
+				cin>>name; 
+				cout<<"Telephone number  :";       
+                long long int tele_number ;
+                cin>>tele_number;
 				suc = table.insert(name,tele_number);
             }
 				

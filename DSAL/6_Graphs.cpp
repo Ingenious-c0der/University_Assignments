@@ -24,7 +24,7 @@ T Stack<T, size>::pop()
 
   {
     cout << "Stack Underflow" << endl;
-    return T();
+    return T(); //make sure the class(typename) has a default ctor
   }
   else
   {
@@ -48,7 +48,7 @@ void Stack<T, size>::push(T const &val)
   else
   {
     cout << "stack overflow" << endl;
-    top = -1;
+    
   }
 }
 template <typename T, int size>
@@ -103,23 +103,17 @@ public:
 
   void add(int ref, string placeName, int weight)
   {
-    Node *runner = next;
-    Node *follower = next;
     if (!next)
     {
       next = new Node(placeName, weight);
       next->setrefValue(ref);
-
       return;
     }
-    // this can be changed, I cannot think as of now
-    while (runner != nullptr)
-    {
-      follower = runner;
-      runner = runner->next;
-    }
-    follower->next = new Node(placeName, weight);
-    follower->next->setrefValue(ref);
+    Node * temp =  new Node(placeName, weight);
+    temp->setrefValue(ref);
+    temp ->next= next; 
+    next = temp ;
+    
   }
   friend class Graph;
   friend class Queue;
@@ -176,21 +170,23 @@ class Graph
   Node **listgrp;
   int max_ver = 0;
   int count = 0;
-  int *generated;
+  int *visited;
 
 public:
   Graph(int max_vertices)
   {
     max_ver = max_vertices;
     listgrp = new Node *[max_ver];
-    generated = new int[max_ver];
+    visited = new int[max_ver];
     for (int i = 0; i < max_ver; i++)
     {
-      generated[i] = 0;
+      visited[i] = 0;
     }
   }
   void addConnection(string name, string placeNameOth, int weight)
   {
+
+
     for (int i = 0; i < max_ver; i++)
     {
       if (listgrp[i])
@@ -247,15 +243,15 @@ public:
     {
       if (listgrp[i])
       {
-        cout << listgrp[i]->placeName << "=>";
+        cout << listgrp[i]->placeName << " => ";
         Node *runner = listgrp[i]->next;
         while (runner)
         {
-          cout << runner->placeName << " ";
+          cout << runner->placeName << " -> ";
           runner = runner->next;
         }
       }
-      cout << endl;
+      cout<<"|" << endl;
     }
   }
 
@@ -265,7 +261,7 @@ public:
     Node U;
 
     Q.Insert(start);
-    generated[start.refValue] = 1;
+    visited[start.refValue] = 1;
     cout << "BFS: ";
     while (Q.NotEmpty())
     {
@@ -274,56 +270,60 @@ public:
       cout << U.placeName << " ";
       for (Node *cur = U.next; cur != nullptr; cur = cur->next)
       {
-        if (generated[cur->refValue] == 0)
+        if (visited[cur->refValue] == 0)
         {
           Q.Insert(NodefromName(cur->placeName));
-          generated[cur->refValue] = 1;
+          visited[cur->refValue] = 1;
         }
       }
     }
     cout << endl;
+    //the array is in class scope hence needs to be flushed for the next time. 
     for (int i = 0; i < max_ver; i++)
     {
-      generated[i] = 0;
+      visited[i] = 0;
     }
   }
 
   void DFSrecursive(Node C)
   {
 
-    generated[C.refValue] = 1;
+    visited[C.refValue] = 1;
     cout << C.placeName << "->";
     for (Node *cur = C.next; cur != nullptr; cur = cur->next)
     {
-      if (generated[cur->refValue] == 0)
+      if (visited[cur->refValue] == 0)
       {
         DFS(NodefromName(cur->placeName));
       }
     }
   }
-
+  //same as bfs but stack instead of queue
   void DFS(Node start)
   {
 
     Stack<Node, 100> S;
     S.push(start);
     cout << "DFS : ";
+    visited[start.refValue] = 1 ; 
     while (!S.is_empty())
     {
-
       Node U = S.pop();
-      if (generated[U.refValue] == 0)
-      {
-        cout << U.placeName << "->";
-        generated[U.refValue] = 1;
-      }
+      cout << U.placeName <<"  ";
       for (Node *cur = U.next; cur != nullptr; cur = cur->next)
       {
-        if (generated[cur->refValue] == 0)
+        if (visited[cur->refValue] == 0)
         {
           S.push(NodefromName(cur->placeName));
+          visited[cur->refValue] = 1; 
         }
       }
+    }
+
+    //the array is in class scope hence needs to be flushed for the next time. 
+    for (int i = 0; i < max_ver; i++)
+    {
+      visited[i] = 0;
     }
   }
 };
@@ -331,25 +331,38 @@ public:
 int main()
 {
 
-  Graph g(6);
-  g.insertNode("Pict");
-  g.insertNode("Bibwewadi");
-  g.insertNode("BVP");
-  g.insertNode("My_house");
-  g.insertNode("Datta_Nagar");
-  g.insertNode("Katraj");
+  // Graph g(6);
+  // g.insertNode("Pict");
+  // g.insertNode("Bibwewadi");
+  // g.insertNode("BVP");
+  // g.insertNode("My_house");
+  // g.insertNode("Datta_Nagar");
+  // g.insertNode("Katraj");
 
-  g.addConnection("Pict", "Bibwewadi", 10);
-  g.addConnection("BVP", "Pict", 10);
-  g.addConnection("Datta_Nagar", "Bibwewadi", 10);
-  g.addConnection("My_house", "Bibwewadi", 10);
-  g.addConnection("BVP", "Datta_Nagar", 10);
-  g.addConnection("Datta_Nagar", "My_house", 10);
-  g.addConnection("Katraj", "My_house", 10);
+  // g.addConnection("Pict", "Bibwewadi", 10);
+  // g.addConnection("BVP", "Pict", 10);
+  // g.addConnection("Datta_Nagar", "Bibwewadi", 10);
+  // g.addConnection("My_house", "Bibwewadi", 10);
+  // g.addConnection("BVP", "Datta_Nagar", 10);
+  // g.addConnection("Datta_Nagar", "My_house", 10);
+  // g.addConnection("Katraj", "My_house", 10);
 
-  // g.DisplayAdjacencyList();
-  g.BFS(g.NodefromName("Pict"));
-  g.DFS(g.NodefromName("Pict"));
+  Graph g(5);
+  g.insertNode("0");
+  g.insertNode("1");
+  g.insertNode("2");
+  g.insertNode("3");
+  g.insertNode("4");
+  g.addConnection("0", "1", 10);
+  g.addConnection("0", "2", 10);
+  g.addConnection("0", "4", 10);
+  g.addConnection("4", "3", 10);
+  
+
+
+  g.DisplayAdjacencyList();
+  g.BFS(g.NodefromName("0"));
+  g.DFS(g.NodefromName("0"));
 
   return 0;
 }

@@ -54,7 +54,7 @@ void Stack<T, size>::push(T const &val)
 	else
 	{
 		cout << "stack overflow" << endl;
-		top = -1;
+	
 	}
 }
 template <typename T, int size>

@@ -47,7 +47,7 @@ public:
 
     bool NotEmpty()
     {
-        return front != -1 && front <= rear;
+        return front != -1 && front < rear;
     }
     void Display()
     {
@@ -174,12 +174,11 @@ public:
             j = q.Delete();
             cout << NodeList[j] << endl;
            
-
             for (int m = 0; m < max_ver; m++)
             {
                 if (matrix[j][m] != 0)
                     indegree[m] -= 1;
-                if (indegree[m] == 0 and visited[m] == 0)
+                if (indegree[m] == 0 && visited[m] == 0)
                 {
                     visited[m] = 1;	// mark as visited
                     q.Insert(m);
