@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include<string>
 using namespace std;
 class Node{
 	Node* right;
@@ -57,7 +58,7 @@ public:
 			}
 		}
 		}else{
-			if(keyword == "" or  meaning == ""){
+			if(keyword == "" ||  meaning == ""){
 			cout<<"Enter the keyword for root node : ";
 			cin>>keyword;
 
@@ -161,7 +162,7 @@ public:
 			}
 		Node* parent = root ;
 		Node* child = root;
-		//finding the appropriate parent and child. 
+		//finding the appropriate parent && child. 
 		while(child->keyword != Keyword){
 			if(child->keyword>Keyword){
 				parent = child;
@@ -180,19 +181,19 @@ public:
 		Node * to_be_deleted = child;
 		
 		if(child == parent){
-			if(child->left == nullptr and child->right == nullptr){
+			if(child->left == nullptr && child->right == nullptr){
 				root = nullptr;
 				delete(child);
 				return ; 
 			}
-			if(child->left == nullptr and child->right!=nullptr)
+			if(child->left == nullptr && child->right!=nullptr)
 			{
 				Node* to_be_deleted = root ; 
 				root = child->right; 
 				delete(to_be_deleted);
 				return ;				
 			}
-			if(child->left != nullptr and child->right==nullptr)
+			if(child->left != nullptr && child->right==nullptr)
 			{
 				Node* to_be_deleted =root; 
 				root = child->left; 
@@ -202,9 +203,10 @@ public:
 			
 		}
 		//case I : both children are not none 
-		//convert case I into case II or case III 
+		//convert case I into case II || case III 
 		//find the inorder successor 
-		if(child->left != nullptr and child->right != nullptr){
+		if(child->left != nullptr && child->right != nullptr){
+			parent = child; 
 			child = child->right ; 
 			while(child->left != nullptr){
 				parent = child ;
@@ -289,7 +291,7 @@ int main() {
 			cout<<"Enter the word to be searched : ";
 			cin>>keyword;
 			status = b1.Search_tree(keyword);
-			if(not status)
+			if(! status)
 				cout<<"Word not found"<<endl;
 			break;
 		case 3:

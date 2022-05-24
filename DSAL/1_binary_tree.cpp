@@ -4,13 +4,13 @@ using namespace std;
 //Beginning with an empty binary tree, Construct binary tree by inserting the values in the order given. After constructing a binary tree perform following operations on it-
 //
 //Perform inorder
-//preorder and post order traversal
-//Change a tree so that the roles of the left and right pointers are swapped at every node
+//preorder && post order traversal
+//Change a tree so that the roles of the left && right pointers are swapped at every node
 //        Find the height of tree
 //Copy this tree to another [operator=]
 //Count number of leaves, number of internal nodes.
 //Erase all nodes in a binary tree.
-//(implement both recursive and non-recursive methods)
+//(implement both recursive && non-recursive methods)
 template <typename T, int size>
 class Stack
 {
@@ -125,9 +125,9 @@ public:
             return P;
         } else {
             char choice;
-            cout << "Where do you want to insert the node , left or right side of " << t->data<< " : ";
+            cout << "Where do you want to insert the node , left || right side of " << t->data<< " : ";
             cin >> choice;
-            if (choice == 'l' or choice == 'L') {
+            if (choice == 'l' || choice == 'L') {
                 t->left_child = insert(t->left_child, c);
             } else {
                 t->right_child = insert(t->right_child, c);
@@ -163,7 +163,7 @@ public:
     void Non_rec_in_order(){
         Stack<Node*,100> s;
         Node* T = get_root();
-        while(T or ! s.is_empty()){
+        while(T || ! s.is_empty()){
             while(T){
                 s.push(T);
                 T = T->left_child;
@@ -181,7 +181,7 @@ public:
     void Non_rec_pre_order(){
          Stack<Node*,100> s;
         Node* T = get_root();
-        while(T or ! s.is_empty()){
+        while(T || ! s.is_empty()){
             while(T){
                 cout<<T->data<<" ";
                 if(T->right_child){
@@ -221,7 +221,7 @@ public:
             p1 = s.get_top();
             s.pop();
         }
-        while(p1!=temp and ! s.is_empty())
+        while(p1!=temp && ! s.is_empty())
         {
             cout<<p1->data<<" ";
             p1 = s.get_top();
@@ -269,7 +269,7 @@ public:
     int  count_leaf_nodes(Node* t){
         if(!t)
             return 0;
-        if(!t->left_child and !t->right_child)
+        if(!t->left_child && !t->right_child)
             return 1;
         int l = count_leaf_nodes(t->left_child);
         int r = count_leaf_nodes(t->right_child);
