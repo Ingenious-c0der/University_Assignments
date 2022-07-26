@@ -3,7 +3,7 @@
 #include <thread>
 #include <mutex>
 
-/
+
 /*
 Person A: Implementing Semaphores in Java is so easy! 
 Person B: Exactly why I chose to implement them in C++.
@@ -11,10 +11,7 @@ Person B: Exactly why I chose to implement them in C++.
 few days later... 
 
 Person B : <Sitting in some underground cave trying to figure out how to group mutexes or construct semaphores in C++>
-
-<Java saved another life that day>
-
-
+Person A : <Completes the task but does not feel the win>
 */
 
 /*
