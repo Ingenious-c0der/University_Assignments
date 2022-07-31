@@ -24,7 +24,7 @@ Issuing the books demonstrates the use of standard mutex or binary Semaphore.
 Readers are the threads trying to read and issue the books.
 */
 
-//just to make the console output look better
+//just to make the console output look sane
 std::mutex printer_mutex ;
 bool is_printing = false; // condition variable for exclusive priting 
 void wait_print()
@@ -308,7 +308,7 @@ public:
 
 int main()
 {
-    
+  //the code basically turned into a mini library tycoon game after making it menu driven
    std::cout << "Enter the number of books in the library: ";
     int n;
     std::cin >> n;

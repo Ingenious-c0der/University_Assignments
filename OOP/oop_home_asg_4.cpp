@@ -10,6 +10,7 @@ class Vector{
         p = new int;
         *p = 0 ;
         size = 0; 
+      
     }
     Vector(const Vector& Vec){
 
