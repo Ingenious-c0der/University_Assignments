@@ -117,6 +117,10 @@ public:
         name = "Table" + std::to_string(total_tables);
         total_tables++;
     }
+    void display_Status()
+    {
+        printLine(name + " has " + std::to_string(chairs) + " chairs available");
+    }
 };
 int Table::total_tables = 0;
 class ReadingHall
@@ -356,12 +360,18 @@ int main()
                     break;
             }
             case 3 :{
-                    std::cout<<"Library Status"<<std::endl;
+                    std::cout<<"------------- Library Status ---------"<<std::endl;
                    
                        for(int i = 0 ; i< n ;i++)
                        {
                         L1.books[i].display_Status();
+                       
                        }
+                       for(int i = 0 ; i< n ;i++)
+                       {
+                        L1.reading_hall.tables[i].display_Status();
+                       }
+                    std::cout<<"---------------------------------------"<<std::endl;
                     
                     break;
             }
