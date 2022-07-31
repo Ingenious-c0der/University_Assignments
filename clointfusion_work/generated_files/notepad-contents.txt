@@ -1,7 +1,0 @@
-ClointFusion Training Task 5
-From	To	Amount	Converted
-INR	USD	720	
-USD	EUR	1000	
-GBP	CAD	2000	
-AUD	SGD	5600	
-CNY	JPY	8500	
