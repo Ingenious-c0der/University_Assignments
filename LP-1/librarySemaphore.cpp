@@ -26,7 +26,7 @@ Readers are the threads trying to read and issue the books.
 
 //just to make the console output look sane
 std::mutex printer_mutex ;
-bool is_printing = false; // condition variable for exclusive priting 
+bool is_printing = false; // condition variable for exclusive printing 
 void wait_print()
 {
     while(is_printing)

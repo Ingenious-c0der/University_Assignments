@@ -3,8 +3,11 @@
 #include <mutex>
 #include <string>
 
+
+
+//machine power is the rate at which the machine can process jobs
 std::mutex printer_mutex;
-bool is_printing = false; // condition variable for exclusive priting
+bool is_printing = false; // condition variable for exclusive printing
 void wait_print()
 {
     while (is_printing)
@@ -153,7 +156,7 @@ public:
     void removeNode(Job j)
     {
         int loop_ctr = 0;
-        for (auto ptr = head, fptr = head; ptr->next != nullptr; fptr = ptr, ptr = ptr->next)
+        for (auto ptr = head->next, fptr = head; ptr->next != nullptr; fptr = ptr, ptr = ptr->next)
         {
             if (ptr->job.name == j.name)
             {
