@@ -157,7 +157,20 @@ public:
         {
             if (ptr->job.name == j.name)
             {
+                if(ptr->job.name == head->job.name)
+                {
+                    if(node_count>1)
+                    {
+                        head = head->next;
+                    }
+                    else
+                    {
+                        head = nullptr;
+                    }
+                    
+                }
                 fptr->next = ptr->next;
+                ptr = nullptr; 
                 delete (ptr);
                 node_count--;
                 printLine(j.name + " removed.");
@@ -185,7 +198,6 @@ public:
             if (current->job.is_completed)
             {
                 removeNode(current->job);
-                               
             }
              current = nxt;           
         }
@@ -194,10 +206,13 @@ public:
             head->job.executeJob(val);
             current = head->next;
         }
-        printLine("Nodes : "+ std::to_string(node_count));
+        
         if (node_count == 0)
         {
             printLine("--- Execution Life Cycle Complete ---");
+            printLine("Node count : "+ std::to_string(node_count));
+            head = nullptr; 
+            current = nullptr; 
             return;
         }
         std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -230,6 +245,7 @@ public:
         //begin is called to resume the execution to
         if(paused)
         {
+           printLine("Resuming Execution");
            resumeExecution();
            return; 
         }
@@ -250,6 +266,7 @@ public:
         if (!paused)
         {
             printLine("Execution is not paused.");
+            return ; 
         }
         paused = false;
         printLine("Execution resumed");
