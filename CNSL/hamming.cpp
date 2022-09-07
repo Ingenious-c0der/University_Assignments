@@ -13,14 +13,14 @@ void setParityBits(int** pbitsPos, int * hammingCode, int r_size)
         int xorRes = 0 ;
         int parityPosInfo[2] = {pbitsPos[i][0],pbitsPos[i][1]};
         int startIndex = parityPosInfo[0] ;
-       // std::cout<<"\nparity bit position :"<<parityPosInfo[0]<<" "<<std::endl;
+        //std::cout<<"\nparity bit position :"<<parityPosInfo[0]<<" "<<std::endl;
         for( int k = startIndex ; k > -1; k = k - 2*(parityPosInfo[1])) 
         {
             
-            for(int j = k ; j > k-(parityPosInfo[1]) ; j--)
+            for(int j = k ; j > k-(parityPosInfo[1]) && j > -1  ; j--)
             {
 
-               // std::cout<<"j :"<<j<<std::endl;
+               //std::cout<<"j :"<<j<<std::endl;
                 if(hammingCode[j] != -1)
                 {  
                      xorRes = xorRes ^ hammingCode[j];
@@ -98,18 +98,12 @@ void getHammingCode(int dataStream[] , int size)
         std::cout<<hammingCode[i]<<" ";
     }
 
-
-
-
-
 }
-
-
 
 int main()
 {
 
-    int array[] = {0,1,0,1};
-    getHammingCode(array,4);
+    int array[] = {0,1,0,1,0,0,0,0};
+    getHammingCode(array,sizeof(array)/sizeof(array[0]));
     return 0;
 }
