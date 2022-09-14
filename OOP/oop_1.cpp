@@ -116,7 +116,7 @@ public:
 int main() {
 	int choice;
 	bool exit_variable = false;
-	while(not exit_variable){
+	while(! exit_variable){
 	Complex c1,c2;
 	cin>>c1;
 	cin>>c2;

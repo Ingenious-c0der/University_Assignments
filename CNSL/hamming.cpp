@@ -103,7 +103,7 @@ void getHammingCode(int dataStream[] , int size)
 int main()
 {
 
-    int array[] = {0,1,0,1,0,0,0,0};
+    int array[] = {0,1,1,1,1};
     getHammingCode(array,sizeof(array)/sizeof(array[0]));
     return 0;
 }
