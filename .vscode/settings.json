@@ -70,6 +70,7 @@
         "xloctime": "cpp",
         "deque": "cpp",
         "set": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "regex": "cpp"
     }
 }

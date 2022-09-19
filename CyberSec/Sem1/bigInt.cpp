@@ -444,12 +444,12 @@ std::ostream &operator<<(std::ostream &out,const ultralong &a){
  
 int main()
 {
-    ultralong a(2844) ;
-    ultralong b(3670);
+    ultralong a(2844000) ;
+    ultralong b(3670000);
     ultralong c ;
     ultralong d ;
     ultralong e(713);
      c = a^b ;
      d = c%e ; 
-    std::cout<<c; 
+    std::cout<<d; 
 }
