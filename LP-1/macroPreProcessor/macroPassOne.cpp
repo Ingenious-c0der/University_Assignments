@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <sstream>
+
 #include <regex>
 
 class InputReader
@@ -25,7 +25,7 @@ public:
     }
 };
 
-class MacroProcessor
+class macroProcessorFirst
 {
     std::fstream MNT;
     std::fstream KPDTAB;
@@ -40,14 +40,14 @@ class MacroProcessor
     InputReader r;
 
 public:
-    MacroProcessor()
+    macroProcessorFirst()
     {
         MNT.open("MNT.txt");
         KPDTAB.open("KPDTAB.txt");
         MDT.open("MDT.txt");
         PNTAB.open("PNTAB.txt");
     }
-    ~MacroProcessor()
+    ~macroProcessorFirst()
     {
         MNT.close();
         KPDTAB.close();
@@ -250,6 +250,6 @@ public:
 
 int main()
 {
-    MacroProcessor m;
+    macroProcessorFirst m;
     m.Process();
 }
