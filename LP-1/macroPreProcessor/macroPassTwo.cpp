@@ -11,7 +11,11 @@ class InputReader
 public:
     InputReader()
     {
-        infile.open("calls.txt");
+       
+    }
+    void open(const std::string& filename)
+    {
+        infile.open(filename);
     }
     ~InputReader()
     {
@@ -22,6 +26,28 @@ public:
         std::string line;
         std::getline(infile, line);
         return line;
+    }
+    void setPointerFrom(int index)
+    {
+        std::string line;
+        int lineNo = 1;
+         
+        //std::cout<<"index is "<<index<<std::endl;
+        if (index == 0 || index == 1)
+        {
+            infile.seekg(0, std::ios::beg);
+            return;
+        }
+        while (std::getline(infile, line))
+        {
+            //std::cout<<"line "<<line<<std::endl;
+            if(lineNo == index-1)
+            {
+
+                return;
+            }
+            lineNo++; 
+        }
     }
 };
 
@@ -44,12 +70,13 @@ class macroProcessorSecond
 public:
     macroProcessorSecond()
     {
+        r.open("calls.txt");
         MNT.open("MNT.txt");
         KPDTAB.open("KPDTAB.txt");
         MDT.open("MDT.txt");
         PNTAB.open("PNTAB.txt");
         APTAB.open("APTAB.txt");
-        EC.open("EC.txt");
+        EC.open("ExtendedCode.txt");
     }
 
     std::vector<int> searchMNT(std::string macroName)
@@ -82,32 +109,6 @@ public:
         }
         return mntData;
     }
-    int getTotalDefaultParams(int kptab_ptr , int range)
-    {
-        int totalDefaultParams = 0;
-        int ctr = 0  ; 
-        KPDTAB.seekg(0, KPDTAB.beg);
-        std::string line;
-        int lineNo = 0;
-        for(int i=0;i<kptab_ptr;i++)
-        {
-            std::getline(KPDTAB, line);
-        }
-        while (ctr < range)
-        {
-             std::istringstream iss(line);
-                std::string word;
-                iss >> word;
-                iss >> word;
-                iss>> word; 
-            if (word!= "---")
-            {    
-                totalDefaultParams++;
-            }
-        }
-        return 0;
-    }
-
     int getQ(std::string paramName)
     {
         std::string line;
@@ -134,6 +135,59 @@ public:
         // TODO: Raise Error
         return -1;
     }
+
+    std::string getDefaultParamName(int index)
+    {
+        std::string line;
+        int lineNo = 0;
+        while (std::getline(KPDTAB, line))
+        {
+            lineNo++;
+            
+            std::istringstream iss(line);
+            std::string word;
+            iss >> word;
+            int loc = std::stoi(word);
+            iss >> word;
+            if (loc == index)
+            {
+                KPDTAB.clear();
+                KPDTAB.seekg(0, std::ios::beg);
+                return word;
+            }
+        }
+        KPDTAB.clear();
+        KPDTAB.seekg(0, std::ios::beg);
+        return "---";
+    }
+
+    std::string getDefaultValue(int index)
+    {   
+        //std::cout<<"returning param at index : "<<index<<std::endl;
+        std::string line;
+        int lineNo = 0;
+        while (std::getline(KPDTAB, line))
+        {
+            lineNo++;
+            // std::cout <<"QLine"<< line << std::endl;
+            std::istringstream iss(line);
+            std::string word;
+            iss >> word;
+            int loc = std::stoi(word);
+            iss >> word;
+            iss >> word;
+            if (loc == index)
+            {
+                KPDTAB.clear();
+                KPDTAB.seekg(0, std::ios::beg);
+                return word;
+            }
+        }
+        KPDTAB.clear();
+        KPDTAB.seekg(0, std::ios::beg);
+        return "---";
+    }
+    
     void Process()
     {
         std::string ipline = "";
@@ -142,7 +196,7 @@ public:
             ipline = r.readNext();
             if (ipline == "")
             {
-                std::cout << "End of File" << std::endl;
+                std::cout << "Pass 2 Completed" << std::endl;
                 break;
             }
             else
@@ -155,7 +209,9 @@ public:
                 int KPDPTR = 0;
                 int APTAB_ctr = 0;
                 int total_params_recieved = 0;
+                int named_params_received_count = 0 ; 
                 int q = 0;
+
 
                 while ((pos = ipline.find(space_delimiter)) != std::string::npos)
                 {
@@ -177,6 +233,7 @@ public:
                 // std::cout<<"MDT Pointer: "<<MDTPtr<<std::endl;
                 // std::cout<<"KPD Pointer: "<<KPDPTR<<std::endl;
                 std::vector<std::string> APTAB_vec(total_ap_size, "-");
+                std::vector<std::string> named_params_received(total_ap_size, "-");
 
                 words.erase(words.begin());
                 for (auto &word : words)
@@ -188,13 +245,16 @@ public:
                         std::string delimiter = "=";
                         std::string param = word.substr(0, word.find(delimiter));
                         std::string value = word.substr(word.find(delimiter) + 1, word.length());
-                        // std::cout << "Param: " << param << std::endl;
-                        // std::cout << "Value: " << value << std::endl;
+                        //std::cout << "Param: " << param << std::endl;
+                        //std::cout << "Value: " << value << std::endl;
                         q = getQ(param);
-                        // std::cout << "Q: " << q << std::endl;
-                        // std::cout<< "APTAB location : " << macroMetaData[1] + q - macroMetaData[2] + 1 << std::endl;
+                        //std::cout << "Q: " << q << std::endl;
+                        //std::cout<<"KPD BASE "<<macroMetaData[4]<<std::endl;
+                        //std::cout<< "APTAB location : " << macroMetaData[1] + q - macroMetaData[4]  << std::endl;
+                        named_params_received[named_params_received_count] = param;
+                        named_params_received_count++;
                         total_params_recieved++;
-                        APTAB_vec[macroMetaData[1] + q - macroMetaData[2] + 1] = value;
+                        APTAB_vec[macroMetaData[1] + q - macroMetaData[4]] = value;
                     }
                     else if (std::regex_match(word, std::regex("(.*)(=)")))
                     {
@@ -208,27 +268,94 @@ public:
                         APTAB_ctr++;
                     }
                 }
-                if (total_ap_size != total_params_recieved)
-                {
+                //TODO: symbol tracking at source
 
-                    if (total_params_recieved + getTotalDefaultParams( macroMetaData[4],macroMetaData[2]) == total_ap_size)
+                for (int i = 0; i < total_ap_size; i++)
+                {
+                    if (APTAB_vec[i] == "-")
                     {
-                      
-                    }
-                    
-                    
-                    else
+                    //std::cout<< "i : " << i << std::endl;
+                    //std::cout<< "KPD BASE : " << macroMetaData[4] << std::endl;
+                    //std::cout<<"Positional param count " <<macroMetaData[1] << std::endl;
+                    std::string defaultParamValue = getDefaultValue(i+macroMetaData[4] - macroMetaData[1]) ; 
+                    //std::cout<<"Default Param Value : "<<defaultParamValue<<std::endl;
+                    if(defaultParamValue == "---")
                     {
-                        std::cout << "ERROR , NOT ENOUGH PARAMETERS PASSED FOR MACRO NAMED " << macro_name << " , EXPECTED " << total_ap_size << " RECIEVED " << total_params_recieved << std::endl;
+                        std::cout << "ERROR , NO VALUE PASSED FOR KEYWORD PARAMETER " << getDefaultParamName(i+macroMetaData[4]-macroMetaData[1]) << std::endl;
                         exit(1);
                     }
+                    else
+                    {
+                        APTAB_vec[i] = defaultParamValue;
+                    }
+                    
+                    }
                 }
+                //write to APTAB
                 APTAB_ctr = 1;
+               
                 for (auto &word : APTAB_vec)
                 {
                     APTAB << APTAB_ctr << "  " << word << std::endl;
                     APTAB_ctr++;
                 }
+                
+                //write to Expanded Code File
+                InputReader ECwriter ; 
+                ECwriter.open("MDT.txt");
+              
+                ECwriter.setPointerFrom(macroMetaData[3]);
+                std::string mdtline = ECwriter.readNext();
+                //split it into words 
+                std::vector<std::string> mdtwords{};
+                int EC_ctr = 1 ; 
+                
+                while(1)
+                {
+                    mdtwords.clear();
+                    pos = 0;
+                    while ((pos = mdtline.find(space_delimiter)) != std::string::npos)
+                    {
+                        mdtwords.push_back(mdtline.substr(0, pos));
+                        mdtline.erase(0, pos + space_delimiter.length());
+                        if ((pos = mdtline.find(space_delimiter)) == std::string::npos)
+                        {
+                            mdtwords.push_back(mdtline.substr(0, pos));
+                        }
+                    }
+                    if(mdtwords.back() == "MEND")
+                    {
+                        break;
+                    }
+                    EC<<EC_ctr<<" ";
+                    
+                    for(auto &word : mdtwords)
+                    {
+                        if(std::regex_match(word, std::regex("(\\()(.*)(\\))")))
+                        {
+                            std::string delimiter = ",";
+                            
+                            int val_index = stoi(word.substr(word.find(delimiter) + 1, word.length()));
+                           
+                            // std::cout<<"Q : "<<val_index<<std::endl;
+                            // std::cout<<"APTAB : "<<APTAB_vec[val_index-1]<<std::endl;
+                            EC << APTAB_vec[val_index-1] << " ";
+                        }
+                        else if(std::regex_match(word, std::regex("[0-9]")))
+                        {
+                            continue; 
+                        }
+                        else
+                        {
+                            EC << word << " ";
+                        }
+                    }
+                    EC << std::endl;
+                    mdtline = ECwriter.readNext();
+                    EC_ctr++; 
+                }
+
+                
             }
         }
     }
