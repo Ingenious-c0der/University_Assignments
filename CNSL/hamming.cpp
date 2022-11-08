@@ -102,8 +102,18 @@ void getHammingCode(int dataStream[] , int size)
 
 int main()
 {
+    std::string dataStream;
+    std::cout<<"Enter the data stream : ";
+    std::cin>>dataStream;
+     int* array;
+    array = new int[dataStream.length()];
+    for(int i = 0 ; i < dataStream.length() ; i++)
+    {
+        array[i] = dataStream[i] - '0';
+    }
 
-    int array[] = {0,1,1,1,1};
-    getHammingCode(array,sizeof(array)/sizeof(array[0]));
+    //int array [] = {1,0,1,0};
+    std::cout<<sizeof(array)/sizeof(array[1]) <<std::endl ; 
+    getHammingCode(array,4); //change size according to requirements
     return 0;
 }

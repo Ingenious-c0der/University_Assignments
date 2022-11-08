@@ -41,6 +41,10 @@ class ExtendedEuclid
 }; 
 int main()
 {
-    ExtendedEuclid(17, 30).getModInverse();
+
+    std::cout<< "Enter the value of a and b : " ;
+    int a,b ;
+    std::cin>>a>>b ;
+    ExtendedEuclid(a,b).getModInverse();
     return 0;
 }

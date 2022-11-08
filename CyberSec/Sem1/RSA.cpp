@@ -46,3 +46,5 @@ int main() {
    cout<<"\n"<<"Encrypted message = "<<c;
    cout<<"\n"<<"Decrypted message = "<<m;
    return 0;
+
+}

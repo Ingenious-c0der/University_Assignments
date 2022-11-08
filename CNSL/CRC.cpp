@@ -64,8 +64,10 @@ void CRC(string dataword, string generator){
  
 int main(){
     string dataword, generator;
-    dataword = "10011101";
-    generator = "1001";
+    cout<<"Enter the message: ";
+    cin>>dataword; 
+    cout<<"Enter the divisor: ";
+    cin>>generator;
     CRC(dataword, generator);
     return 0;
 }

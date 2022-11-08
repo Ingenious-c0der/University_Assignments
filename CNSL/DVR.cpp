@@ -1,7 +1,7 @@
 #include<iostream>
 #include<conio.h>
 using namespace std ;
-void main()
+int main()
 {
     int graph[50][50];
     int i,j,k,t;
