@@ -15,7 +15,7 @@ public class Bully {
         sc = new Scanner(System.in);
     }
     public void initialiseRing() {
-        System.out.println(“Enter No of Processes”);
+        System.out.println("Enter No of Processes");
         noOfProcess = sc.nextInt();
         processes = new Process[noOfProcess];
         for (int i = 0; i < noOfProcess; i++) {
@@ -29,7 +29,7 @@ public class Bully {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(“Process no“ + processes[getMax()].id + ”fails”);
+        System.out.println("Process no" + processes[getMax()].id + "fails");
         processes[getMax()].active = false;
         int InitiatorProcessId = 0;
         boolean notOver = true;
@@ -37,26 +37,26 @@ public class Bully {
             boolean moreHigherProcesses = false;
             for (int i = InitiatorProcessId + 1; i < noOfProcess; i++) {
                 if (processes[i].active) {
-                    System.out.println(“Process“ + InitiatorProcessId + ”Passes Election(“+InitiatorProcessId + ”) message to process” + i);
+                    System.out.println("Process" + InitiatorProcessId + "Passes Election("+InitiatorProcessId + ") message to process" + i);
                     moreHigherProcesses = true;
                 }
             }
             if (moreHigherProcesses) {
                 for (int i = InitiatorProcessId + 1; i < noOfProcess; i++) {
                     if (processes[i].active) {
-                        System.out.println(“Process“ + i + ”Passes Ok(“+i + ”) message to process” + InitiatorProcessId);
+                        System.out.println("Process" + i + "Passes Ok("+i + ") message to process" + InitiatorProcessId);
                     }
                 }
                 InitiatorProcessId++;
             } else {
                 int coordinator = processes[getMax()].id;
-                System.out.println(“Finally Process“ + coordinator + ”Becomes Coordinator”);
-                for (int i = coordinator - 1; i >= 0; i–) {
+                System.out.println("Finally Process" + coordinator + "Becomes Coordinator");
+                for (int i = coordinator - 1; i >= 0; i--) {
                     if (processes[i].active) {
-                        System.out.println(“Process“ + coordinator + ”Passes Coordinator(“+coordinator + ”) message to process” + i);
+                        System.out.println("Process" + coordinator + "Passes Coordinator("+coordinator + ") message to process" + i);
                     }
                 }
-                System.out.println(“End of Election”);
+                System.out.println("End of Election");
                 notOver = false;
                 break;
             }

@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.*;
-class ser {
+class server {
 
     public static void main(String[] args) throws Exception {
         ServerSocket sersock = new ServerSocket(3000);

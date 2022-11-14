@@ -1,7 +1,7 @@
 import java.io.*;
 import java.net.*;
 
-class cli {
+class client {
 
     public static void main(String[] args) throws Exception {
         Socket sock = new Socket("127.0.0.1", 3000);

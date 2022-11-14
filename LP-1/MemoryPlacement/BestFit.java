@@ -2,7 +2,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 class BestFit {
-    void bestfit(Scanner sc) {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter No of memory blocks: ");
         int n = sc.nextInt();
         int mb[] = new int[n];

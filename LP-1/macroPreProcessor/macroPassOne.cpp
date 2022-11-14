@@ -252,4 +252,5 @@ int main()
 {
     macroProcessorFirst m;
     m.Process();
+    std::cout<< "Pass One completed Successfully" << std::endl;
 }

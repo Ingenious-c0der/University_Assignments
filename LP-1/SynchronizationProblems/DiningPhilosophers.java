@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
-public class DPP {
+public class DiningPhilosophers {
     // The number of philosophers
     private static final int NUM_PHILOSOPHERS = 5;
     public static void main(String[] args) {
