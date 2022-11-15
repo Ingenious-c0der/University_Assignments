@@ -1,0 +1,79 @@
+Map Reduce 
+
+Practical problem statement Schema was
+
+
+Collection "Classes" 
+{
+    Subject :  String,
+    professor : String, 
+    Students : [{
+        fName : String,
+        lName : String,
+        Age : Number
+    }],
+    topics : [String]
+    start_date : ISODate(), 
+    cost : Number
+}
+
+Q1 Find the total classes conducted by prof "Alice Jones"
+Ans : db.collections.mapReduce ( 
+    function(){
+        emit(this.professor,this.subject)
+        }, 
+    function(key,values){
+    return 
+    {
+        count : values.length
+       "Classes Conducted" : values
+    }
+    },
+    {
+        query : {professor : "Alice Jones"},
+        out : "Result1"
+    }
+    
+)
+
+Q2 Total cost for each of the classes conducted by all the professors. 
+Ans : db.collections.mapReduce ( 
+    function(){
+        emit(this.professor,this.cost)
+        }, 
+    function(key,values){
+    return 
+    {
+       
+        "Total Cost" : Array.sum(values)
+        "Cost per class": values
+    }
+    },
+    {
+        query : {},
+        out : "Result2"
+    }
+    
+)
+
+Q3 Find the total number of students in each class.
+Ans : db.collections.mapReduce ( 
+    function(){
+        emit(this.subject,this.students.length)
+        }, 
+    function(key,values){
+    return 
+    {
+       
+        "Total Students" : Array.sum(values)
+    }
+    },
+    {
+        query : {},
+        out : "Result3"
+    }
+    
+)
+
+time taken to do 30 dcuments insertion : 1 hr 50 mins
+time taken for writing map reductions : 15 mins 
