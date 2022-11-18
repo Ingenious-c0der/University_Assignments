@@ -71,6 +71,8 @@
         "deque": "cpp",
         "set": "cpp",
         "stack": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "queue": "cpp",
+        "unordered_set": "cpp"
     }
 }

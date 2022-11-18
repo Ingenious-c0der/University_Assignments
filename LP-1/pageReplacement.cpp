@@ -1,301 +1,274 @@
-#include<iostream>
-
-
-class Page {
-    int pageNumber; 
-    int data; 
-    int Priority;
-    static int pageCounter ; 
-    Page(
-
-    )
-    {
-        pageNumber = pageCounter; 
-        data = 0 ; 
-        Priority = 0 ; 
-        pageCounter++; 
-    }
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <unordered_set>
+class Page
+{
+    int pageNumber = 0;
+    int page_age;
+    Page() {}
     Page(int PageNumber)
     {
-        this->pageNumber = PageNumber ;
-        data = 0 ; 
-        Priority = 0 ; 
+        this->pageNumber = PageNumber;
+        page_age = 0;
     }
-    friend class LRUMemory; 
-    friend class FIFOMemory ; 
+    friend class LRUMemory;
+    friend class OptimalMemory;
+    friend class FIFOMemory;
 };
-int Page::pageCounter = 0 ; 
+
 class LRUMemory
 {
-    int frameSize = 0 ; 
-    Page * buffer;
+    int frameSize = 0;
+    Page *buffer;
     int totalPageFaults = 0;
-    Page * pageFaultArray ; 
-    int * bufferAgeArray ; 
-    bool isBufferFull = false; 
-    public:
+
+public:
     LRUMemory(int bufferSize)
     {
-        frameSize = bufferSize; 
+        frameSize = bufferSize;
         buffer = new Page[bufferSize];
-        for(int i = 0  ; i< frameSize ; i++)
+        for (int i = 0; i < frameSize; i++)
         {
-            buffer[i] = Page(-1) ; 
+            buffer[i] = Page(-1);
         }
-        pageFaultArray = new Page[20]; //side feature
-        bufferAgeArray = new int[bufferSize];
-        
     }
-
     ~LRUMemory()
     {
         delete buffer;
     }
     void displayLRU()
     {
-        for(int i = 0 ; i<frameSize ; i++)
+        for (int i = 0; i < frameSize; i++)
         {
-            std::cout<< buffer[i].pageNumber <<" | "; 
-
+            std::cout << buffer[i].pageNumber << " | ";
         }
-        std::cout<<std::endl; 
+
+        std::cout << std::endl;
     }
 
     void insertToBuffer(Page page)
     {
-        //finding the most aged pageNumber or least recently used page number in the buffer
-        
-        if(isBufferFull)
+        // finding the most aged pageNumber or least recently used page number in the buffer
+
+        int LRU_index = 0;
+        int age = 0;
+        for (int i = 0; i < frameSize; i++)
         {
-        int LRU_index = 0 ; 
-        int age = 0 ; 
-        for(int i = 0 ; i< frameSize; i++)
-        {
-            if (age < bufferAgeArray[i])
+            if (age < buffer[i].page_age)
             {
-                age = bufferAgeArray[i];
-                LRU_index = i ; 
+                age = buffer[i].page_age;
+                LRU_index = i;
             }
         }
-        std::cout<<"Page Number "<<buffer[LRU_index].pageNumber<<" was least recently used and hence replaced with "<<page.pageNumber<<" at frame Location "<<LRU_index<<std::endl ;
+        std::cout << "Page Number " << buffer[LRU_index].pageNumber << " was least recently used and hence replaced with " << page.pageNumber << " at frame Location " << LRU_index << std::endl;
         buffer[LRU_index] = page;
-        bufferAgeArray[LRU_index] = 0 ;
-        }
-        else
-        {
-            int neg_count = 0 ; 
-            for( int i = 0 ; i<frameSize;i++)
-            {
-                if(buffer[i].pageNumber  == -1)
-                {
-                   neg_count ++ ; 
-                    
-                }
-            
-            }
-            if (neg_count == 1)
-            {
-                isBufferFull = true; 
-            }
-
-            for( int i = 0 ; i<frameSize;i++)
-            {
-                if(buffer[i].pageNumber  == -1)
-                {
-                    buffer[i] = page;
-                    return ;  
-
-                }
-            }
-            
-
-        } 
-
+        buffer[LRU_index].page_age = 0;
     }
-
 
     bool getPage(Page page)
     {
-        for(int i = 0 ; i< frameSize ;i++)
+        for (int i = 0; i < frameSize; i++)
         {
-            
-                bufferAgeArray[i] ++ ; 
-            
+            buffer[i].page_age++;
         }
-        for(int i = 0 ; i< frameSize ;i++)
+        for (int i = 0; i < frameSize; i++)
         {
-            if(buffer[i].pageNumber == page.pageNumber)
+            if (buffer[i].pageNumber == page.pageNumber)
             {
-               std::cout<<"HIT "<<page.pageNumber<<std::endl;
-                 displayLRU();
-                bufferAgeArray[i] = 0 ; 
+                std::cout << "HIT " << page.pageNumber << std::endl;
+                displayLRU();
+                buffer[i].page_age = 0;
                 return true;
             }
-            
         }
-        std::cout<<"MISS "<<page.pageNumber<<std::endl;
-        totalPageFaults++; 
+        std::cout << "MISS " << page.pageNumber << std::endl;
+        totalPageFaults++;
         insertToBuffer(page);
         displayLRU();
-        return false ; 
+        return false;
     }
 
-    void enterSequenceLRU(int * arr , int size)
+    void enterSequenceLRU(int *arr, int size)
     {
-        for ( int i = 0; i < size ; i++ )
+        for (int i = 0; i < size; i++)
         {
             getPage(Page(arr[i]));
         }
-        std::cout<<"Total Page Faults for the given Page Sequence with LRU with frameSize "<<frameSize <<" are "<<totalPageFaults<<std::endl; 
+        std::cout << "Total Page Faults for the given Page Sequence with LRU with frameSize " << frameSize << " are " << totalPageFaults << std::endl;
     }
-
 };
-
-
 
 class FIFOMemory
 {
-    int frameSize = 0 ; 
-    Page * buffer;
-    int totalPageFaults = 0;
-    Page * pageFaultArray ; 
-    int * bufferAgeArray ; 
-    bool isBufferFull = false; 
-    public:
-    FIFOMemory(int bufferSize)
-    {
-        frameSize = bufferSize; 
-        buffer = new Page[bufferSize];
-        for(int i = 0  ; i< frameSize ; i++)
-        {
-            buffer[i] = Page(-1) ; 
-        }
-        pageFaultArray = new Page[20]; //side feature
-        bufferAgeArray = new int[bufferSize];
-        
-    }
+    int max_size = 0;
+    int page_faults = 0;
+    std::unordered_set<int> current_pages;
+    std::queue<Page> buffer;
 
-    ~FIFOMemory()
+public:
+    FIFOMemory(int max_size)
     {
-        delete buffer;
+        this->max_size = max_size;
     }
     void displayFIFO()
     {
-        for(int i = 0 ; i<frameSize ; i++)
+        for (auto i : current_pages)
         {
-            std::cout<< buffer[i].pageNumber <<" | "; 
-
+            std::cout << i << " | ";
         }
-        std::cout<<std::endl; 
     }
 
-    void insertToBuffer(Page page)
+    void insert(Page page)
     {
-        //finding the most aged pageNumber or least recently used page number in the buffer
-        
-        if(isBufferFull)
+
+        if (current_pages.find(page.pageNumber) != current_pages.end())
         {
-        int LRU_index = 0 ; 
-        int age = 0 ; 
-        for(int i = 0 ; i< frameSize; i++)
+            std::cout << "HIT " << page.pageNumber << std::endl;
+            return;
+        }
+        std::cout << "MISS " << page.pageNumber << std::endl;
+        page_faults++;
+        if (buffer.size() == max_size)
         {
-            if (age < bufferAgeArray[i])
+            Page temp = buffer.front();
+            buffer.pop();
+            current_pages.erase(temp.pageNumber);
+            std::cout << "REPLACING " << temp.pageNumber << " with " << page.pageNumber << std::endl;
+        }
+        buffer.push(page);
+        current_pages.insert(page.pageNumber);
+        displayFIFO();
+        std::cout << std::endl;
+    }
+
+    void enterSequenceFIFO(int *arr, int size)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            insert(Page(arr[i]));
+        }
+        std::cout << "Total Page Faults for the given Page Sequence with FIFO with frameSize " << max_size << " are " << page_faults << std::endl;
+    }
+};
+
+class OptimalMemory
+{
+
+    int max_size = 0;
+    std::vector<Page> buffer;
+    int page_faults = 0;
+    int readHead = 0;
+    std::vector<int> pageNumbers;
+
+public:
+    OptimalMemory(int max_size, std::vector<int> pageNumbers)
+    {
+        this->max_size = max_size;
+        this->pageNumbers = pageNumbers;
+    }
+    void displayOptimal()
+    {
+        for (auto i : buffer)
+        {
+            std::cout << i.pageNumber << " | ";
+        }
+    }
+
+    void insert(Page page)
+    {
+
+        for (int i = 0; i < buffer.size(); i++)
+        {
+            if (buffer[i].pageNumber == page.pageNumber)
             {
-                age = bufferAgeArray[i];
-                LRU_index = i ; 
+                std::cout << "HIT " << page.pageNumber << std::endl;
+                
+                return;
             }
         }
-        std::cout<<"Page Number "<<buffer[LRU_index].pageNumber<<" was least recently used and hence replaced with "<<page.pageNumber<<" at frame Location "<<LRU_index<<std::endl ;
-        buffer[LRU_index] = page;
-        bufferAgeArray[LRU_index] = 0 ;
+        page_faults++;
+        if (buffer.size() == max_size)
+        {
+            int replace_index = findfarthest(); // finding the farthest page number in the future
+            std::cout<< "Replacing " << buffer[replace_index].pageNumber << " with " << page.pageNumber << std::endl;
+            buffer[replace_index] = page;
         }
         else
         {
-            int neg_count = 0 ; 
-            for( int i = 0 ; i<frameSize;i++)
-            {
-                if(buffer[i].pageNumber  == -1)
-                {
-                   neg_count ++ ; 
-                }
-            
-            }
-            if (neg_count == 1)
-            {
-                isBufferFull = true; 
-            }
-
-            for( int i = 0 ; i<frameSize;i++)
-            {
-                if(buffer[i].pageNumber  == -1)
-                {
-                    buffer[i] = page;
-                    return ;  
-
-                }
-            }
-            
-
-        } 
-
+            buffer.push_back(page);
+        }
+        displayOptimal(); 
+        std::cout<<std::endl; 
+       
     }
 
-
-    bool getPage(Page page)
+    int findfarthest()
     {
-
-        for(int i = 0 ; i< frameSize ;i++)
-        {
-            
-                bufferAgeArray[i] ++ ; 
-            
-        }
-        for(int i = 0 ; i< frameSize ;i++)
-        {
-            if(buffer[i].pageNumber == page.pageNumber)
+            int farthest = 0 ; 
+            int replace_index = 0;
+            std::cout<<"Read Head at : "<<readHead<<std::endl ;
+            for (int i = 0; i < max_size; i++)
             {
-                std::cout<<"HIT "<<page.pageNumber<<std::endl;
-                 displayFIFO();
-                return true;
+                
+                for (int j = readHead; j < pageNumbers.size(); j++)
+                {
+                    if(buffer[i].pageNumber == pageNumbers[j] )
+                    {             
+                        if(j > farthest)
+                        {
+                            farthest = j ; 
+                            replace_index = i ; 
+                        }
+                        std::cout<< "Page Number " << buffer[i].pageNumber << " is at distance " << j-readHead << " from read head " << std::endl;
+                        break ; 
+                    }
+                    if(j == pageNumbers.size()-1)
+                    {
+                        std::cout<< "Page Number " << buffer[i].pageNumber << " is at distance infinite from read head " << std::endl;
+                        return i ; 
+                    }
+                    
+                }
             }
-          
-        }
-     std::cout<<"MISS "<<page.pageNumber<<std::endl;
-        totalPageFaults++; 
-        insertToBuffer(page);
-        displayFIFO();
-        return false ; 
+            std::cout<< "Next Farthest :"<<buffer[replace_index].pageNumber <<" at "<< farthest<< std::endl; 
+            return replace_index;
     }
 
-    void enterSequenceFIFO(int * arr , int size)
+    void enterSequenceOptimal()
     {
-        for ( int i = 0; i < size ; i++ )
+        for (int i = 0; i < pageNumbers.size(); i++)
         {
-            getPage(Page(arr[i]));
+            insert(Page(pageNumbers[i]));
+            readHead++;
         }
-        std::cout<<"Total Page Faults for the given Page Sequence with FIFO with frameSize "<<frameSize <<" are "<<totalPageFaults<<std::endl; 
+        std::cout << "Total Page Faults for the given Page Sequence with Optimal with frameSize " << max_size << " are " << page_faults << std::endl;
     }
+
 
 };
-
-
-
-
 int main()
 {
 
-    int arr[]  = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 3};
+    int arr[] = {7, 0, 1, 2,
+               0, 3, 0, 4, 2, 3, 0, 3, 2, 1,
+               2, 0, 1, 7};
     int arr2[] = {1, 3, 0, 3, 5, 6, 3};
+    std::vector<int> pageNumbers(arr, arr + sizeof(arr) / sizeof(arr[0]));
+    LRUMemory l(4);
     FIFOMemory f(3);
-    LRUMemory l(4); 
-    std::cout<<"LRU MEMORY OPERATIONS START"<<std::endl; 
+    OptimalMemory o(3, pageNumbers);
+    std::cout << "LRU MEMORY OPERATIONS START" << std::endl;
     l.enterSequenceLRU(arr, 14);
-    std::cout<<"LRU MEMORY OPERATIONS END"<<std::endl; 
+    std::cout << "LRU MEMORY OPERATIONS END" << std::endl;
 
-    
-    std::cout<<"FIFO MEMORY OPERATIONS START"<<std::endl;
-    f.enterSequenceFIFO(arr2,7);
-     std::cout<<"FIFO MEMORY OPERATIONS END"<<std::endl;
+    std::cout << "FIFO MEMORY OPERATIONS START" << std::endl;
+    f.enterSequenceFIFO(arr2, 7);
+    std::cout << "FIFO MEMORY OPERATIONS END" << std::endl;
+
+    std::cout << "OPTIMAL MEMORY OPERATIONS START" << std::endl;
+    o.enterSequenceOptimal();
+    std::cout << "OPTIMAL MEMORY OPERATIONS END" << std::endl;
 
 
 }

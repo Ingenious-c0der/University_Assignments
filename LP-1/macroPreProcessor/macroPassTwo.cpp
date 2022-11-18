@@ -56,15 +56,15 @@ class macroProcessorSecond
     std::fstream MNT;
     std::fstream KPDTAB;
     std::fstream MDT;
-    std::fstream PNTAB;
+
     std::fstream APTAB;
     std::fstream EC; // Expansion Code File
-    int PNTAB_ptr = 0;
+
     int KPDTAB_ptr = 0;
     int MNTTAB_ptr = 0;
     int MDTTAB_ptr = 1;
     int kp_pool = 1;
-    std::vector<std::string> pntab{};
+
     InputReader r;
 
 public:
@@ -74,7 +74,6 @@ public:
         MNT.open("MNT.txt");
         KPDTAB.open("KPDTAB.txt");
         MDT.open("MDT.txt");
-        PNTAB.open("PNTAB.txt");
         APTAB.open("APTAB.txt");
         EC.open("ExtendedCode.txt");
     }

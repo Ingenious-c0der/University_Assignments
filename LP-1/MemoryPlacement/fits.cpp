@@ -70,7 +70,7 @@ class FirstFit{
             memory_to_place = memories[i];
             for(int i = 0 ; i<mem_size ; i++ )
             {
-                if(memory_to_place < memory_array_sizes[i] && memory_capture_array[i]==0)
+                if(memory_to_place < memory_array_sizes[i] && memory_capture_array[i]==  0 )
                 {
                     memory_array[i] = memory_to_place ; 
                     memory_capture_array[i]=1 ; 
@@ -282,8 +282,6 @@ class WorstFit{
                 if(memory_to_place < memory_array_sizes[i] && memory_capture_array[i]==0 && memory_array_sizes[i] > least_fit_size)
                 {
                     least_fit_size = memory_array_sizes[i]; 
-
-                    
                     least_fit_index = i ; 
                 }
             }
