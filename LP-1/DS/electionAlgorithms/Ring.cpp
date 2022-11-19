@@ -105,7 +105,7 @@ int main()
 {
         int n ;
         std::cout<< "Enter the size of the ring : " ;
-        std::cin>> n 
+        std::cin>> n ;
         Ring r(n) ;
         r.startElection(); 
 }
