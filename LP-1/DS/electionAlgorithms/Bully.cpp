@@ -65,17 +65,7 @@ class Bully {
         
         if(activeVector.size() !=0 )
         {
-            int skip = 0 ; 
-            while(!processes[whistleBlowerNode.priority+skip].active)
-            {
-                skip++; 
-                if(skip> processCount)
-                {
-                    std::cout<<"Whole network has failed "<<std::endl; 
-                    exit(1); 
-                }
-            }
-            electionProcesing(processes[whistleBlowerNode.priority + skip]); 
+            electionProcesing(processes[activeVector[0].priority - 1 ]); 
         }
         else
         {   

@@ -66,8 +66,6 @@ class Ring {
         bool done = false; 
         while(!done)
         {
-            
-            //std::cout<< "index :"<<index <<std::endl ;
             if(ring[index].checkCircuit(msg_circuit)){
                 int co_od = 0 ; 
                 for(int k: msg_circuit)
@@ -81,7 +79,6 @@ class Ring {
             else{
             int prev_index= index; 
             msg_circuit.push_back(index);
-        
             index = (index+1)%processCount; ;
             while(!ring[index].active)
             {
