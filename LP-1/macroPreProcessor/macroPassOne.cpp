@@ -28,7 +28,7 @@ public:
 class macroProcessorFirst
 {
     std::fstream MNT;
-    std::fstream KPDTAB;
+    std::fstream KPDTAB; 
     std::fstream MDT;
     std::fstream PNTAB;
     int PNTAB_ptr = 0;
@@ -143,15 +143,6 @@ public:
                     // case for positional param
                     else if (std::regex_match(word, std::regex("(&)(.)")))
                     {
-
-                        // std::vector<std::string> elems{};
-                        // std::string space_delimiter_equal = "&";
-                        // while ((pos = word.find(space_delimiter_equal)) != std::string::npos)
-                        // {
-                        //     elems.push_back(word.substr(0, pos));
-                        //     word.erase(0, pos + space_delimiter_equal.length());
-                        // }
-
                         PNTAB_ptr++;
                         word.erase(0, 1);
                         pntab.push_back(word);
