@@ -108,7 +108,6 @@ class PassOne:
         self.inst_table = InstTable()
 
     def setLitAddrWhereIndex(self, index, addr):
-
         for i in range(len(self.littab)):
             if i == index:
                 self.littab[i].setAddress(addr)
@@ -130,7 +129,6 @@ class PassOne:
 
     def Process(self):
         symtab_index = 0
-        lit_index = 0
         pool_ptr = 0
         lit_ptr = 0
         while (1):
@@ -186,16 +184,14 @@ class PassOne:
                 for i in range(2, len(parts)):
                     if (parts[i] == ""):
                         continue
-                    if (self.inst_table.getType(parts[i]) == "RG"):
-                        code += f"({self.inst_table.getCode(parts[i])}) "
-                    elif (self.inst_table.getType(parts[i]) == "CC"):
+                    if (self.inst_table.getType(parts[i]) == "RG" or self.inst_table.getType(parts[i]) == "CC"):
                         code += f"({self.inst_table.getCode(parts[i])}) "
                     elif (parts[i].startswith("=")):
                         symbol = parts[i].replace("=", "").replace("'", "")
-                        lit_index += 1
-                        self.littab.append(TableRow(lit_index, symbol, -1))
-                        code += f"(L,0{lit_index}) "
                         lit_ptr += 1
+                        self.littab.append(TableRow(lit_ptr, symbol, -1))
+                        code += f"(L,0{lit_ptr}) "
+                        
                     else:
                         if (self.symtab.__contains__(parts[i])):
                             code += f"(S,0{self.symtab[parts[i]].getIndex()}) "
@@ -216,8 +212,7 @@ class PassOne:
                 self.pooltab.append(lit_ptr-1)
             if (parts[1] == "END"):
                 if (len(parts) == 3 and parts[2] != ""):
-                    self.ic.write(
-                        f"(AD,02) (S,0{self.symtab[parts[2]].getIndex()})\n")
+                    self.ic.write(f"(AD,02) (S,0{self.symtab[parts[2]].getIndex()})\n")
                 else:
                     self.ic.write("(AD,02)\n")
                 for i in range(pool_ptr, lit_ptr):
@@ -234,7 +229,6 @@ class PassOne:
                     self.littab_file.write(f"{str(self.littab[i])}\n")
                 for i in range(0, len(self.pooltab)):
                     self.pooltab_file.write(f"#{str(self.pooltab[i])}\n")
-
 
 p = PassOne()
 p.Process()
