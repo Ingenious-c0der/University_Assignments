@@ -165,9 +165,7 @@ int main()
                 std::cout<<"Enter the name of the reader"<<std::endl;
                 std::cin>>readerName;
                 Reader r = Reader(readerName);                
-                std::thread t1([&IS, &doc, &r](){
-                    IS.read(doc,r);
-                });
+                std::thread t1(&InteractionSpace::read,IS,std::ref(doc),r);
                 t1.detach();
                 break;
             }
@@ -177,7 +175,7 @@ int main()
                 std::cout<<"Enter the name of the writer"<<std::endl;
                 std::cin>>writerName;
                 Writer w = Writer(writerName);
-                std::thread t2([&IS, &doc, &w](){IS.write(doc,w);});
+                std::thread t2(&InteractionSpace::write, IS, std::ref(doc), w); 
                 t2.detach(); 
                 break;
             }

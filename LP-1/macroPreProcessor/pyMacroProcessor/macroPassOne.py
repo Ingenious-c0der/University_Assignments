@@ -25,7 +25,6 @@ class MacroPassOne:
                 print("Macro Pass One Complete")
                 break
             ipline = ipline[1]
-            print(ipline)
             if(ipline =="MACRO"):
                 kpCount = 0 
                 ppCount = 0 
@@ -68,7 +67,6 @@ class MacroPassOne:
                 outline= ""
                 elems = ipline.split();
                 outline+= f"{mdt_ptr} {elems[0]} "
-                
                 if("&" in elems[1]) :
                     for i in range(len(pntab_list)):
                         if elems[1] == pntab_list[i]: 

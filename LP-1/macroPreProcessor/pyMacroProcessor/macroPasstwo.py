@@ -90,7 +90,6 @@ class MacroPassTwo:
                 for element in elems[1:]:
                     if (re.match("(.+)(=)(.+)", element)):
                         params = element.split("=")
-                        print(params)
                         q = self.getQ(params[0])
                         self.aptab[totalPPCount + q - kpdtab_start] = params[1]
                     else:
@@ -113,8 +112,8 @@ class MacroPassTwo:
                     words = ipline.split()
                     outline += f"{ctr } "
                     for element in words[1:]:
-                        if (re.match("(\\()(.*)(\\))", element)):
-                            num = int(element.split(",")[1].split(")")[0])
+                        if (re.match("\(.*\)", element)):
+                            num = int(re.sub("[^0-9]","",element))
                             outline += f"{self.aptab[num-1]} "
                         else:
                             outline += f"{element} "
