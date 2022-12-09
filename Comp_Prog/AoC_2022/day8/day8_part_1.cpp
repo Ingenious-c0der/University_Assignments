@@ -10,6 +10,7 @@ int main()
     ifstream file("input.txt");
     string line;
     vector<vector<int>> forest;
+    int max_scenic_score = 1 ;
     
 
     while(getline(file, line))
@@ -35,15 +36,20 @@ int main()
             }
             else
             {
-                //cout<<"i = "<<i<<" j = "<<j<< " "<<forest[i][j]<<endl;
+                int scenic_score = 1;
+                int north , south , east ,west ; 
+                cout<<"i = "<<i<<" j = "<<j<< " "<<forest[i][j]<<endl;
                 //check north 
                 int flag = 0;
-                
+                int count = 0; 
                 for(int k = i-1; k >= 0 ; k --)
                 {
-                   
+                   count++; 
                     if(forest[k][j] >= forest[i][j])
                     {
+                        
+                        scenic_score *= (count);
+                        north = count ; 
                         flag = 1 ; 
                         break;
                     }
@@ -55,16 +61,19 @@ int main()
                    
                     continue;
                 }
-
+             count = 0 ;
                 
                 flag = 0 ; 
                 //check south
                
                 for(int k = i+1; k <= n-1 ; k ++)
                 {
+                    count++;
                     if(forest[k][j] >= forest[i][j])
                     {
                         flag = 1 ; 
+                        south = count ; 
+                        scenic_score *= count;
                         break;
                     }
                     
@@ -78,13 +87,16 @@ int main()
                 
                 //check east
                 flag = 0 ; 
+                count = 0 ;
                 
                 for(int k = j+1; k <= m-1 ; k ++)
                 {
-                    
+                    count++;
                     if(forest[i][k] >= forest[i][j])
                     {
                         flag = 1 ; 
+                        east  = count ; 
+                        scenic_score *= (count);
                         break;
                     }
                     
@@ -98,12 +110,15 @@ int main()
                 
                 //check west
                 flag  = 0 ;
-                
+                count = 0 ;
                 for(int k = j-1; k >= 0 ; k --)
                 {
+                    count++;
                     if(forest[i][k] >= forest[i][j])
                     {
                         flag = 1 ; 
+                        west = count ; 
+                        scenic_score *= (count);
                         break;
                     }
                     
@@ -114,29 +129,17 @@ int main()
                   
                     continue;
                 }
+                cout<<"North = "<<north<<" South = "<<south<<" East = "<<east<<" West = "<<west<<endl;
+                if(scenic_score > max_scenic_score)
+                {
+                    max_scenic_score = scenic_score;
+                }
                 
 
             }
         }
     }
     
-    int scenic_score = 1;
-    for(int i = 0; i < n; i++)
-    {
-        for(int j = 0; j < m; j++)
-        {
-           
-            if(forest_skele[i][j] == 0)
-            {
-               // total_count++;
-            }
-        }
-        cout << endl;
-    }
-    cout<<"max_scenic_score = "<<scenic_score<<endl;
-    
-
-
-
-
+   
+    cout<<"max_scenic_score = "<<max_scenic_score<<endl;
 }
