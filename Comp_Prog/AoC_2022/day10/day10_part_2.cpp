@@ -98,7 +98,6 @@ int main()
                 
                 op_line = crt;
             }
-
             delta = 0;
         }
 
