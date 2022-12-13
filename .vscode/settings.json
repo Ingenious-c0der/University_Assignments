@@ -74,6 +74,7 @@
         "regex": "cpp",
         "queue": "cpp",
         "unordered_set": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "functional": "cpp"
     }
 }
