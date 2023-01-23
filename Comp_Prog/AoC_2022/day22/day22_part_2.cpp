@@ -9,6 +9,7 @@
 using namespace std;
 int y_size = 200;
 int x_size = 100;
+ 
 // remember : check for the hash hit on warp case yourself
 void warp(int &x, int &y, vector<vector<string>> grid, int facing)
 {
