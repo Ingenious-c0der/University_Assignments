@@ -1,0 +1,8 @@
+<!ELEMENT KeyBoardStore (Keyboard+)>
+<!ELEMENT Keyboard (KeyBoardBrand,KeyBoardModel,KeyBoardType,KeyBoardSwitch,KeyBoardPrice,KeyBoardImage)>
+<!ELEMENT KeyBoardBrand (#PCDATA)>
+<!ELEMENT KeyBoardModel (#PCDATA)>
+<!ELEMENT KeyBoardType (#PCDATA)>
+<!ELEMENT KeyBoardSwitch (#PCDATA)>
+<!ELEMENT KeyBoardPrice (#PCDATA)>
+<!ELEMENT KeyBoardImage (#PCDATA)>

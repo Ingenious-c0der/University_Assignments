@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE KeyBoardStore SYSTEM "doc.dtd">
+<?xml-stylesheet type="text/xsl" href="doc.xsl"?>
+<KeyBoardStore>
+
+<Keyboard>
+    <KeyBoardBrand>RAZER</KeyBoardBrand>
+    <KeyBoardModel>BlackWidow</KeyBoardModel>
+    <KeyBoardType>Cherry MX</KeyBoardType>
+    <KeyBoardSwitch>Red</KeyBoardSwitch>
+    <KeyBoardPrice>300$</KeyBoardPrice>
+    <KeyBoardImage>https://www.razerzone.com/gb-en/gaming-keyboards-keypads/razer-blackwidow-ultimate-2016</KeyBoardImage>
+
+</Keyboard>
+
+<Keyboard>
+    <KeyBoardBrand>OBINSLAB</KeyBoardBrand>
+    <KeyBoardModel>ANNE PRO 2</KeyBoardModel>
+    <KeyBoardType>Gateron</KeyBoardType>
+    <KeyBoardSwitch>Blue</KeyBoardSwitch>
+    <KeyBoardPrice>100$</KeyBoardPrice>
+    <KeyBoardImage>https://www.obins.net/anne-pro-2</KeyBoardImage>
+</Keyboard>
+
+<Keyboard>
+    <KeyBoardBrand>LOGITECH</KeyBoardBrand>
+    <KeyBoardModel>PRO X</KeyBoardModel>
+    <KeyBoardType>Padded</KeyBoardType>
+    <KeyBoardSwitch>None</KeyBoardSwitch>
+    <KeyBoardPrice>50$</KeyBoardPrice>
+    <KeyBoardImage>https://www.logitechg.com/en-us/products/gaming-keyboards/pro-x-wireless-mechanical-gaming-keyboard.html</KeyBoardImage>
+</Keyboard>
+
+
+</KeyBoardStore>
