@@ -87,7 +87,7 @@ public class SubmitServlet extends HttpServlet {
 		String sqlQuery = "select * from tomcat_user_table where username = \""+username+"\"";
 		String url = "jdbc:mysql://localhost:3306/db";
 		String admin_username = "root";
-		String password = "Snowbell2002$";
+		String password = "********";
 		try {
 			String dbDriver = "com.mysql.cj.jdbc.Driver";
 			Class.forName(dbDriver);
