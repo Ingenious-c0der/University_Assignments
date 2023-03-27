@@ -119,23 +119,23 @@ public:
             for (auto child : children)
             {
              
-                for (auto closed_child : closed_list)
-                {
-                    if (child->position == closed_child->position)
-                    {
-                        continue;
-                    }
-                }
+                // for (auto closed_child : closed_list)
+                // {
+                //     if (child->position == closed_child->position)
+                //     {
+                //         continue;
+                //     }
+                // }
                 child->g = current_node->g + 1;
                 child->h = std::pow(abs(child->position.x - end_node->position.x),2) +std::pow( abs(child->position.y - end_node->position.y),2);
                 child->f = child->g + child->h;
-                for (auto open_node : open_list)
-                {
-                    if (child->position == open_node->position && child->g > open_node->g)
-                    {
-                        continue;
-                    }
-                }
+                // for (auto open_node : open_list)
+                // {
+                //     if (child->position == open_node->position && child->g > open_node->g)
+                //     {
+                //         continue;
+                //     }
+                // }
                 open_list.push_back(child);
               
             }
@@ -152,7 +152,7 @@ int main()
         {0, 0, 0, 0, 1, 0},
         {0, 1, 0, 1, 0, 0},
         {0, 0, 0, 0, 0, 0}};
-    Co_od Start = Co_od(0, 0);
+    Co_od Start = Co_od(1, 1);
     Co_od End = Co_od(5, 5);
     Node n = Node(nullptr, Start, 0, 0, 0);
     n.a_star(mat, Start, End);
