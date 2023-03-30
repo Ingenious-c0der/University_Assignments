@@ -1,0 +1,1 @@
+<p id="demo">Hover over this paragraph to see the change...</p> <script> (function() { var p= document.getElementById("demo"); var attri= document.createAttribute("onmouseover"); attri.value="myFunction()"; p.setAttributeNode(attri); })(); function myFunction() { document.getElementById("demo").innerHTML="See..!! I changed...."; } </script>
