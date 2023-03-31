@@ -32,7 +32,7 @@ function submitRegister() {
 <?PHP
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbpass = 'Snowbell2002$';
+$dbpass = '';
 $mysqli = new mysqli($dbhost, $dbuser, $dbpass);
 if($mysqli->connect_errno > 0){
     die('Unable to connect to database [' . $db->connect_error . ']');
