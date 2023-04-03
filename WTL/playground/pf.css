@@ -1,0 +1,43 @@
+.fa {
+    padding: 30px;
+    font-size: 50px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+  }
+  .fa-facebook {
+    background: #3B5998;
+    color: white;
+  }
+  .fa-twitter {
+    background: #55ACEE;
+    color: white;
+  }
+#table-1{
+    border: 1px solid black;
+    background-color: rgb(224, 224, 123);
+    width: 60%;
+    text-align: center;
+
+}
+
+td{
+    border: 1px solid black;
+    background-color: beige;
+    width: 60%;
+    text-align: center;
+}
+h1{
+    color: #55ACEE;
+}
+#social-link{
+    width:50%;
+    display: flex;
+    justify-content: center;
+
+}
+img{
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+}
