@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Name, Phone, and Age Form</title>
+  </head>
+  <body>
+    <h1>Name, Phone, and Age Form</h1>
+    <form method="post" action="process-form.php">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <br>
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+      <br>
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" min="18" max="100" required>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>

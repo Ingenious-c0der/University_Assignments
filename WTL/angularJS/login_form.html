@@ -1,49 +1,40 @@
 <!DOCTYPE html>
-
 <html>
-  <head>
-    <title>AngularJs Validate Controls in Form</title>
+<head>
+  <title>AngularJs Validate Controls in Form</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+</head>
+<body>
 
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-    <script type="text/javascript">
-      var app = angular.module("formApp", []);
-
-      app.controller("formCtrl", function ($scope) {
-        $scope.sendForm = function () {
-          $scope.msg = "Form Validated";
-        };
-      });
-    </script>
-  </head>
-
-  <body>
-    <div ng-app="formApp" ng-controller="formCtrl">
-      <form name="personForm" ng-submit="sendForm()">
-        First Name:<input
-          type="text"
-          name="firstname"
-          ng-model="person.fname"
-          required
-        />
-
-        <span ng-show="personForm.firstname.$error.required"> Required! </span>
-        <br /><br />
-
-        Last Name:<input
-          type="text"
-          name="lastname"
-          ng-model="person.lname"
-          required
-        />
-
-        <span ng-show="personForm.lastname.$error.required"> Required! </span>
-        <br /><br />
-
-        <button type="submit">Submit Form</button><br /><br />
-
-        <span>{{msg}}</span>
-      </form>
+<div ng-app="formApp" ng-controller="formCtrl">
+  <div class="container">
+    <h2>AngularJS Form Validation</h2>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <form name="personForm" ng-submit="sendForm()">
+          <div class="form-group">
+            <label for="firstname">First Name:</label>
+            <input type="text" class="form-control" id="firstname" name="firstname" ng-model="person.fname" required>
+            <span class="help-block" ng-show="personForm.firstname.$error.required">Required!</span>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Last Name:</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" ng-model="person.lname" required>
+            <span class="help-block" ng-show="personForm.lastname.$error.required">Required!</span>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="pwd" name="pwd" ng-model="person.pwd" required>
+            <span class="help-block" ng-show="personForm.pwd.$error.required">Required!</span>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit Form</button>
+     
+        </form>
+      </div>
     </div>
-  </body>
+  </div>
+</div>
+
+</body>
 </html>
