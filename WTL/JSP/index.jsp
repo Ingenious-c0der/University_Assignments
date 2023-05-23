@@ -17,6 +17,7 @@
   Connection con = DriverManager.getConnection(
 		  url,username,password
 		  );
+      
   String sql = "select * from tomcat_user_table;"; 
   Statement st = con.createStatement();
   ResultSet rs = st.executeQuery(sql); 

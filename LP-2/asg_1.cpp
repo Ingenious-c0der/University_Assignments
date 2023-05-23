@@ -24,7 +24,7 @@ T Stack<T, size>::pop()
 
   {
     cout << "Stack Underflow" << endl;
-    return T(); //make sure the class(typename) has a default ctor
+    return T(); // make sure the class(typename) has a default ctor
   }
   else
   {
@@ -48,7 +48,6 @@ void Stack<T, size>::push(T const &val)
   else
   {
     cout << "stack overflow" << endl;
-    
   }
 }
 template <typename T, int size>
@@ -109,15 +108,14 @@ public:
       next->setrefValue(ref);
       return;
     }
-    Node * temp =  new Node(nodeName, weight);
+    Node *temp = new Node(nodeName, weight);
     temp->setrefValue(ref);
-    temp ->next= next; 
-    next = temp ;
-    
+    temp->next = next;
+    next = temp;
   }
   friend class Graph;
   friend class Queue;
-  friend class Stack<Node, 100>; 
+  friend class Stack<Node, 100>;
 };
 int Node::count = 0;
 
@@ -171,9 +169,9 @@ class Graph
   Node **listgrp;
   int max_ver = 0;
   int count = 0;
-  
+
 public:
-int *visited;
+  int *visited;
 
   Graph(int max_vertices)
   {
@@ -187,7 +185,6 @@ int *visited;
   }
   void addConnection(string name, string nodeNameOth, int weight)
   {
-
 
     for (int i = 0; i < max_ver; i++)
     {
@@ -253,13 +250,13 @@ int *visited;
           runner = runner->next;
         }
       }
-      cout<<" X " << endl;
+      cout << " X " << endl;
     }
   }
 
   void BFSRecursive(Queue q)
   {
-    if(q.NotEmpty())
+    if (q.NotEmpty())
     {
       Node U = q.Delete();
       cout << U.nodeName << "  ";
@@ -275,17 +272,14 @@ int *visited;
     }
     else
     {
-      //flush the visited array
+      // flush the visited array
       for (int i = 0; i < max_ver; i++)
       {
         visited[i] = 0;
       }
-      return ; 
+      return;
     }
-
   }
-
-
 
   void BFS(Node start)
   {
@@ -310,7 +304,7 @@ int *visited;
       }
     }
     cout << endl;
-    //the array is in class scope hence needs to be flushed for the next time. 
+    // the array is in class scope hence needs to be flushed for the next time.
     for (int i = 0; i < max_ver; i++)
     {
       visited[i] = 0;
@@ -330,35 +324,34 @@ int *visited;
       }
     }
   }
-  //same as bfs but stack instead of queue
+  // same as bfs but stack instead of queue
   void DFS(Node start)
   {
 
     Stack<Node, 100> S;
     S.push(start);
     cout << "DFS : ";
-    visited[start.refValue] = 1 ;
-    
+    visited[start.refValue] = 1;
+
     while (!S.is_empty())
     {
       Node U = S.pop();
-      cout << U.nodeName <<"  ";
+      cout << U.nodeName << "  ";
       for (Node *cur = U.next; cur != nullptr; cur = cur->next)
       {
         if (visited[cur->refValue] == 0)
         {
           S.push(NodefromName(cur->nodeName));
-          visited[cur->refValue] = 1; 
+          visited[cur->refValue] = 1;
         }
       }
     }
-    //the array is in class scope hence needs to be flushed for the next time. 
+    // the array is in class scope hence needs to be flushed for the next time.
     for (int i = 0; i < max_ver; i++)
     {
       visited[i] = 0;
-      
     }
-    cout<<endl;
+    cout << endl;
   }
 
   void refreshBuffer()
@@ -368,25 +361,20 @@ int *visited;
       visited[i] = 0;
     }
   }
-
-
-
 };
 
 int main()
 {
 
-
- 
-  cout<< "Graph" <<endl; 
+  cout << "Graph" << endl;
   /*
     Structure of the graph is as follows
-      
+
               A
             /   \
            /     \
           B       C
-        /   \   /   \ 
+        /   \   /   \
       D     E  F     G
   */
 
@@ -407,17 +395,16 @@ int main()
   tree_like.DisplayAdjacencyList();
   tree_like.BFS(tree_like.NodefromName("A"));
   tree_like.DFS(tree_like.NodefromName("A"));
-  cout<< "DFS Recursive : ";
+  cout << "DFS Recursive : ";
   tree_like.DFSrecursive(tree_like.NodefromName("A"));
-  tree_like.refreshBuffer() ;
-  cout<<endl; 
-  Queue q ;
+  tree_like.refreshBuffer();
+  cout << endl;
+  Queue q;
   q.Insert(tree_like.NodefromName("A"));
   cout << "BFS Recursive : ";
-  tree_like.visited[0] = 1; 
+  tree_like.visited[0] = 1;
   tree_like.BFSRecursive(q);
-  cout<<endl;
-
+  cout << endl;
 
   return 0;
 }

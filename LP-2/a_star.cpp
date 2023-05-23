@@ -147,12 +147,12 @@ int main()
 {
     std::vector<std::vector<int>> mat = {
         {0, 1, 0, 0, 0, 0},
-        {0, 0, 1, 0, 1, 0},
-        {0, 1, 0, 0, 0, 1},
-        {0, 0, 0, 0, 1, 0},
+        {0, 1, 1, 1, 1, 0},
+        {0, 1, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 1},
         {0, 1, 0, 1, 0, 0},
         {0, 0, 0, 0, 0, 0}};
-    Co_od Start = Co_od(1, 1);
+    Co_od Start = Co_od(0, 2);
     Co_od End = Co_od(5, 5);
     Node n = Node(nullptr, Start, 0, 0, 0);
     n.a_star(mat, Start, End);

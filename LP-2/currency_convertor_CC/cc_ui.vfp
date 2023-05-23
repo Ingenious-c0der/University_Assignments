@@ -1,0 +1,27 @@
+<apex:page controller="CurrencyConversionController">
+    <apex:form>
+        <apex:pageBlock title="Currency Converter">
+            <apex:pageMessages />
+            
+            <apex:pageBlockSection>
+                <apex:inputText value="{!amount}" label="Amount" />
+                <apex:selectList value="{!fromCurrency}" label="From Currency">
+                    <apex:selectOptions value="{!currencyOptions}" />
+                </apex:selectList>
+                <apex:selectList value="{!toCurrency}" label="To Currency">
+                    <apex:selectOptions value="{!currencyOptions}" />
+                </apex:selectList>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Convert" action="{!convertCurrency}" rerender="resultPanel" />
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel id="resultPanel">
+                <apex:pageBlockSection rendered="{!convertedAmount != null}">
+                    <apex:outputText value="Converted Amount: {!convertedAmount}" />
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

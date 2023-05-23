@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="taskApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script"></script>
+</head>
+<body>
+  <div ng-controller="taskController">
+    <h3>Task Management App</h3>
+    <form ng-submit="addTask()">
+      <input type="text" ng-model="newTask" placeholder="newTask" />
+      <button type="submit">Create Task</button>
+    </form>
+    <ul>
+      <li ng-repeat="task in tasks">{{task | limitTo:2 }}</li>
+    </ul>
+  </div>
+  <script>
+    var app = angular.module("taskApp", []);
+    app.factory("TaskModel", function () {
+      var tasks = [];
+      return {
+        addTask: function (task) {
+          tasks.push(task);
+        },
+        getTasks: function () {
+          return tasks;
+        },
+      };
+    });
+    app.controller("taskController", [
+      "$scope",
+      "TaskModel",
+      function ($scope, TaskModel) {
+        $scope.tasks = TaskModel.getTasks();
+        $scope.addTask = function () {
+          TaskModel.addTask($scope.newTask);
+          $scope.newTask = "";
+        };
+      },
+    ]);
+  </script>
+</body>
+</html>

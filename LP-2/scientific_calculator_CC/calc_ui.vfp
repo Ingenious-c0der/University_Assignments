@@ -1,0 +1,37 @@
+<apex:page controller="ScientificCalculatorController">
+    <apex:form>
+        <apex:pageBlock title="Scientific Calculator">
+            <apex:pageMessages />
+            
+            <apex:pageBlockSection>
+                <apex:outputLabel value="Input: " for="inputValue" />
+                <apex:inputText id="inputValue" value="{!inputNumber}" />
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection>
+                <apex:outputLabel value="Output: " for="outputValue" />
+                <apex:outputText id="outputValue" value="{!displayValue}" style="font-weight:bold;" />
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Clear" action="{!clear}" rerender="outputValue,inputValue" />
+            </apex:pageBlockButtons>
+            
+            <apex:outputPanel id="resultPanel">
+                <apex:pageBlockSection>
+                    <apex:commandButton value="Square Root" action="{!calculateSquareRoot}" rerender="outputValue" />
+                    <apex:commandButton value="Square" action="{!calculateSquare}" rerender="outputValue" />
+                    <apex:commandButton value="Inverse" action="{!calculateInverse}" rerender="outputValue" />
+                    <apex:commandButton value="Percentage" action="{!calculatePercentage}" rerender="outputValue" />
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection>
+                    <apex:commandButton value="Sin" action="{!calculateSin}" rerender="outputValue" />
+                    <apex:commandButton value="Cos" action="{!calculateCos}" rerender="outputValue" />
+                    <apex:commandButton value="Tan" action="{!calculateTan}" rerender="outputValue" />
+                    <apex:commandButton value="Log" action="{!calculateLog}" rerender="outputValue" />
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
