@@ -29,6 +29,7 @@ class Graph:
                 if adjacent_vertex not in visited:
                     self.dfs_recursive(adjacent_vertex, visited)
 
+
     # DFS traversal starting from a given vertex
     def dfs(self, start_vertex):
         visited = set()  # Set to keep track of visited vertices
@@ -52,13 +53,28 @@ class Graph:
             if vertex in self.adj_list:
                 # Get all adjacent vertices of the dequeued vertex
                 # If a neighbor has not been visited, mark it as visited and enqueue it
+                
                 for adjacent_vertex in self.adj_list[vertex]:
                     if adjacent_vertex not in visited:
                         visited.add(adjacent_vertex)
                         queue.append(adjacent_vertex)
 
         print()
-
+    def dfs_search(self, start_vertex, end_vertex):
+        visited = set()
+        stack = deque()
+        stack.append(start_vertex)
+        while stack:
+            vertex = stack.pop()
+            if vertex == end_vertex:
+                return True
+            if vertex not in visited:
+                visited.add(vertex)
+                if vertex in self.adj_list:
+                    for adjacent_vertex in self.adj_list[vertex]:
+                        stack.append(adjacent_vertex)
+        return False
+    
 
 graph = Graph()
 
@@ -77,3 +93,5 @@ graph.dfs('A')
 # Perform BFS starting from vertex 'A'
 print("BFS traversal:")
 graph.bfs('A')
+
+print(graph.dfs_search('A', 'F'))
