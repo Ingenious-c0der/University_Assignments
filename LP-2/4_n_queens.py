@@ -37,16 +37,15 @@ def isSafe(board, row, col):
  
     return True
  
-def solveNQUtil(board, col):
+def solveNQUtil(solutions,board, col):
     if col >= N:
+        solutions.append(board)
         return True
     for i in range(N):
         if isSafe(board, i, col):
             board[i][col] = 1
-            if solveNQUtil(board, col + 1) == True:
-                return True
+            solveNQUtil(solutions,board, col + 1) 
             board[i][col] = 0
-    return False
  
 def solveNQ():
     board = [ 
@@ -59,11 +58,11 @@ def solveNQ():
             [0, 0, 0, 0 , 0, 0, 0, 0],
             [0, 0, 0, 0 , 0, 0, 0, 0],
             ]
- 
-    if solveNQUtil(board, 0) == False:
+    solutions = []
+    if solveNQUtil(solutions,board, 0) == False:
         print ("Solution does not exist")
         return False
- 
+    print(len(solutions))
     printSolution(board)
     return True
  
