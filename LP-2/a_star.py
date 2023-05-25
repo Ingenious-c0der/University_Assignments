@@ -71,7 +71,7 @@ def a_star(matrix, start_loc, end_loc):
 
 # Example usage
 matrix = [
-    [0, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
     [0, 1, 1, 1, 1, 0],
     [0, 1, 0, 0, 0, 0],
     [0, 0, 1, 0, 0, 1],

@@ -115,7 +115,7 @@ std::vector<Co_od> a_star(std::vector<std::vector<int>> matrix, Co_od start_loc,
 int main()
 {
     std::vector<std::vector<int>> matrix = {
-        {0, 0, 0, 0, 0, 0},
+        {0, 1, 0, 0, 0, 0},
         {0, 1, 1, 1, 1, 0},
         {0, 1, 0, 0, 0, 0},
         {0, 1, 0, 0, 0, 1},

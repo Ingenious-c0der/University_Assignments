@@ -1,0 +1,73 @@
+public class CurrencyConversion {
+    public Decimal amount { get; set; }
+    public String fromCurrency { get; set; }
+    public String toCurrency { get; set; }
+    public Decimal convertedAmount { get; set; }
+    
+    public List<SelectOption> getCurrencyOptions() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('USD', 'USD'));
+        options.add(new SelectOption('EUR', 'EUR'));
+        options.add(new SelectOption('INR', 'INR'));
+        options.add(new SelectOption('SGD','SGD'));
+        options.add(new SelectOption('RUB','RUB'));
+        
+        return options;
+    }
+    
+    public void convertCurrency() {
+        if (amount == null || fromCurrency == null || toCurrency == null) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please provide all conversion details.'));
+            return;
+        }
+        
+        Map<String, Map<String, Decimal>> currencyConversionMap = new Map<String, Map<String, Decimal>>();
+
+// USD to other currencies
+Map<String, Decimal> usdConversionMap = new Map<String, Decimal>();
+usdConversionMap.put('EUR', 0.93);
+usdConversionMap.put('INR', 82.72);
+usdConversionMap.put('SGD', 1.35);
+currencyConversionMap.put('USD', usdConversionMap);
+
+// RUB to other currencies
+Map<String, Decimal> rubConversionMap = new Map<String, Decimal>();
+rubConversionMap.put('INR', 1.03);
+rubConversionMap.put('USD', 0.012);
+rubConversionMap.put('SGD', 0.017);
+rubConversionMap.put('EUR', 0.012);
+currencyConversionMap.put('RUB', rubConversionMap);
+
+// SGD to other currencies
+Map<String, Decimal> sgdConversionMap = new Map<String, Decimal>();
+sgdConversionMap.put('USD', 0.74);
+sgdConversionMap.put('INR', 61.81);
+sgdConversionMap.put('EUR', 0.69);
+sgdConversionMap.put('RUB', 59.31);
+currencyConversionMap.put('SGD', sgdConversionMap);
+
+// INR to other currencies
+Map<String, Decimal> inrConversionMap = new Map<String, Decimal>();
+inrConversionMap.put('RUB', 0.97);
+inrConversionMap.put('SGD', 0.016);
+inrConversionMap.put('USD', 0.012);
+inrConversionMap.put('EUR', 0.011);
+currencyConversionMap.put('INR', inrConversionMap);
+
+// EUR to other currencies
+Map<String, Decimal> eurConversionMap = new Map<String, Decimal>();
+eurConversionMap.put('INR', 0.011);
+eurConversionMap.put('USD', 1.07);
+eurConversionMap.put('SGD', 1.45);
+eurConversionMap.put('RUB', 88.84);
+currencyConversionMap.put('EUR', eurConversionMap);
+
+// Perform the conversion
+if (currencyConversionMap.containsKey(fromCurrency) && currencyConversionMap.get(fromCurrency).containsKey(toCurrency)) {
+    Decimal conversionRate = currencyConversionMap.get(fromCurrency).get(toCurrency);
+    convertedAmount = amount * conversionRate;
+} else {
+    ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Exchange rate not available for specified currencies.'));
+}
+    }
+}
