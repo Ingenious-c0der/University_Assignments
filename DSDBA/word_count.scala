@@ -14,6 +14,11 @@ mapdata.collect;
 
 val reducedata = mapdata.reduceByKey(_+_);  //reducing the data by key and aggregating the values of the same key 
 
+
+//optional 
+reduceData.saveAsTextFile("output.txt"); 
+
+
 reducedata.collect;
 
 
