@@ -1,0 +1,5 @@
+Error: Failed to connect to database
+Info: User login successful
+Warning: Disk space is low
+Error: Database server is down
+Info: User logout

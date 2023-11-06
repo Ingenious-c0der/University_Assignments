@@ -1,0 +1,12 @@
+From: sender@example.com
+To: recipient@example.com
+Subject: Sample Email
+Date: Tue, 18 Oct 2022 10:30:00 +0000
+Message-ID: <1234567890@example.com>
+
+This is a sample email in .eml format.
+
+You can add more content here to simulate an email body.
+
+Sincerely,
+Sender
