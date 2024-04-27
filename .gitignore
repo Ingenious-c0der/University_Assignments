@@ -1,3 +1,4 @@
 *jar
 node_modules/
 *exe
+.DS_Store
